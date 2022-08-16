@@ -9,6 +9,14 @@ import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
+import { SkuList } from "./sku/SkuList";
+import { SkuCreate } from "./sku/SkuCreate";
+import { SkuEdit } from "./sku/SkuEdit";
+import { SkuShow } from "./sku/SkuShow";
+import { SkuPackageList } from "./skuPackage/SkuPackageList";
+import { SkuPackageCreate } from "./skuPackage/SkuPackageCreate";
+import { SkuPackageEdit } from "./skuPackage/SkuPackageEdit";
+import { SkuPackageShow } from "./skuPackage/SkuPackageShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -41,6 +49,20 @@ const App = (): React.ReactElement => {
           edit={UserEdit}
           create={UserCreate}
           show={UserShow}
+        />
+        <Resource
+          name="Sku"
+          list={SkuList}
+          edit={SkuEdit}
+          create={SkuCreate}
+          show={SkuShow}
+        />
+        <Resource
+          name="SkuPackage"
+          list={SkuPackageList}
+          edit={SkuPackageEdit}
+          create={SkuPackageCreate}
+          show={SkuPackageShow}
         />
       </Admin>
     </div>
