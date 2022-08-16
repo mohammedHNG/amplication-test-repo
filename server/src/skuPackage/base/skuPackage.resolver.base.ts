@@ -25,6 +25,7 @@ import { DeleteSkuPackageArgs } from "./DeleteSkuPackageArgs";
 import { SkuPackageFindManyArgs } from "./SkuPackageFindManyArgs";
 import { SkuPackageFindUniqueArgs } from "./SkuPackageFindUniqueArgs";
 import { SkuPackage } from "./SkuPackage";
+import { SkuFindManyArgs } from "../../sku/base/SkuFindManyArgs";
 import { Sku } from "../../sku/base/Sku";
 import { SkuPackageService } from "../skuPackage.service";
 
@@ -161,6 +162,26 @@ export class SkuPackageResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Sku])
+  @nestAccessControl.UseRoles({
+    resource: "Sku",
+    action: "read",
+    possession: "any",
+  })
+  async skus(
+    @graphql.Parent() parent: SkuPackage,
+    @graphql.Args() args: SkuFindManyArgs
+  ): Promise<Sku[]> {
+    const results = await this.service.findSkus(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)

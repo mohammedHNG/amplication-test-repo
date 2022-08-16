@@ -20,10 +20,9 @@ import {
 } from "class-validator";
 import { GraphQLJSONObject } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { SkuWhereUniqueInput } from "./SkuWhereUniqueInput";
+import { SkuPackageWhereUniqueInput } from "../../skuPackage/base/SkuPackageWhereUniqueInput";
 import { Type } from "class-transformer";
 import { SkuPackageCreateNestedManyWithoutSkusInput } from "./SkuPackageCreateNestedManyWithoutSkusInput";
-import { SkuCreateNestedManyWithoutSkusInput } from "./SkuCreateNestedManyWithoutSkusInput";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @InputType()
 class SkuCreateInput {
@@ -39,15 +38,15 @@ class SkuCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => SkuWhereUniqueInput,
+    type: () => SkuPackageWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => SkuWhereUniqueInput)
+  @Type(() => SkuPackageWhereUniqueInput)
   @IsOptional()
-  @Field(() => SkuWhereUniqueInput, {
+  @Field(() => SkuPackageWhereUniqueInput, {
     nullable: true,
   })
-  inclusions?: SkuWhereUniqueInput | null;
+  packages?: SkuPackageWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
@@ -93,18 +92,6 @@ class SkuCreateInput {
     nullable: true,
   })
   skuPackages?: SkuPackageCreateNestedManyWithoutSkusInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => SkuCreateNestedManyWithoutSkusInput,
-  })
-  @ValidateNested()
-  @Type(() => SkuCreateNestedManyWithoutSkusInput)
-  @IsOptional()
-  @Field(() => SkuCreateNestedManyWithoutSkusInput, {
-    nullable: true,
-  })
-  skus?: SkuCreateNestedManyWithoutSkusInput;
 
   @ApiProperty({
     required: false,

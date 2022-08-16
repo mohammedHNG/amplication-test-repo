@@ -14,6 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
 import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
+import { SkuCreateNestedManyWithoutSkuPackagesInput } from "./SkuCreateNestedManyWithoutSkuPackagesInput";
 @InputType()
 class SkuPackageCreateInput {
   @ApiProperty({
@@ -27,5 +28,17 @@ class SkuPackageCreateInput {
     nullable: true,
   })
   sku?: SkuWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => SkuCreateNestedManyWithoutSkuPackagesInput,
+  })
+  @ValidateNested()
+  @Type(() => SkuCreateNestedManyWithoutSkuPackagesInput)
+  @IsOptional()
+  @Field(() => SkuCreateNestedManyWithoutSkuPackagesInput, {
+    nullable: true,
+  })
+  skus?: SkuCreateNestedManyWithoutSkuPackagesInput;
 }
 export { SkuPackageCreateInput };

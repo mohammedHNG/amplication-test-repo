@@ -15,10 +15,9 @@ import { JsonFilter } from "../../util/JsonFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested, IsEnum } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
-import { SkuWhereUniqueInput } from "./SkuWhereUniqueInput";
+import { SkuPackageWhereUniqueInput } from "../../skuPackage/base/SkuPackageWhereUniqueInput";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { SkuPackageListRelationFilter } from "../../skuPackage/base/SkuPackageListRelationFilter";
-import { SkuListRelationFilter } from "./SkuListRelationFilter";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @InputType()
 class SkuWhereInput {
@@ -46,15 +45,15 @@ class SkuWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => SkuWhereUniqueInput,
+    type: () => SkuPackageWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => SkuWhereUniqueInput)
+  @Type(() => SkuPackageWhereUniqueInput)
   @IsOptional()
-  @Field(() => SkuWhereUniqueInput, {
+  @Field(() => SkuPackageWhereUniqueInput, {
     nullable: true,
   })
-  inclusions?: SkuWhereUniqueInput;
+  packages?: SkuPackageWhereUniqueInput;
 
   @ApiProperty({
     required: false,
@@ -100,18 +99,6 @@ class SkuWhereInput {
     nullable: true,
   })
   skuPackages?: SkuPackageListRelationFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => SkuListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => SkuListRelationFilter)
-  @IsOptional()
-  @Field(() => SkuListRelationFilter, {
-    nullable: true,
-  })
-  skus?: SkuListRelationFilter;
 
   @ApiProperty({
     required: false,

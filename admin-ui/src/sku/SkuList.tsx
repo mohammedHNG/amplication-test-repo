@@ -8,7 +8,7 @@ import {
   ReferenceField,
 } from "react-admin";
 import Pagination from "../Components/Pagination";
-import { SKU_TITLE_FIELD } from "./SkuTitle";
+import { SKUPACKAGE_TITLE_FIELD } from "../skuPackage/SkuPackageTitle";
 
 export const SkuList = (props: ListProps): React.ReactElement => {
   return (
@@ -23,8 +23,12 @@ export const SkuList = (props: ListProps): React.ReactElement => {
         <DateField source="createdAt" label="Created At" />
         <TextField label="fulfillmentInfo" source="fulfillmentInfo" />
         <TextField label="ID" source="id" />
-        <ReferenceField label="inclusions" source="sku.id" reference="Sku">
-          <TextField source={SKU_TITLE_FIELD} />
+        <ReferenceField
+          label="packages"
+          source="skupackage.id"
+          reference="SkuPackage"
+        >
+          <TextField source={SKUPACKAGE_TITLE_FIELD} />
         </ReferenceField>
         <TextField label="skuDescription" source="skuDescription" />
         <TextField label="skuId" source="skuId" />
