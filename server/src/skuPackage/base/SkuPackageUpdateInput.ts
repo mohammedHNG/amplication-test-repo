@@ -14,6 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
 import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
+import { SkuUpdateManyWithoutSkuPackagesInput } from "./SkuUpdateManyWithoutSkuPackagesInput";
 @InputType()
 class SkuPackageUpdateInput {
   @ApiProperty({
@@ -27,5 +28,17 @@ class SkuPackageUpdateInput {
     nullable: true,
   })
   sku?: SkuWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => SkuUpdateManyWithoutSkuPackagesInput,
+  })
+  @ValidateNested()
+  @Type(() => SkuUpdateManyWithoutSkuPackagesInput)
+  @IsOptional()
+  @Field(() => SkuUpdateManyWithoutSkuPackagesInput, {
+    nullable: true,
+  })
+  skus?: SkuUpdateManyWithoutSkuPackagesInput;
 }
 export { SkuPackageUpdateInput };

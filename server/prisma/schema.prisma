@@ -23,12 +23,12 @@ model Sku {
   createdAt       DateTime        @default(now())
   fulfillmentInfo Json?
   id              String          @id @default(cuid())
-  inclusions      Sku?            @relation(name: "inclusions", fields: [inclusionsId], references: [id])
-  inclusionsId    String?
+  packages        SkuPackage?     @relation(name: "packages", fields: [packagesId], references: [id])
+  packagesId      String?
+  skuDescription  String?
   skuId           String?
   skuName         String?
-  skuPackages     SkuPackage[]
-  skus            Sku[]           @relation(name: "inclusions")
+  skuPackages     SkuPackage[]    @relation(name: "SkuOnSkuPackages")
   skuType         EnumSkuSkuType?
   updatedAt       DateTime        @updatedAt
 }
@@ -36,8 +36,9 @@ model Sku {
 model SkuPackage {
   createdAt DateTime @default(now())
   id        String   @id @default(cuid())
-  sku       Sku?     @relation(fields: [skuId], references: [id])
+  sku       Sku?     @relation(name: "SkuOnSkuPackages", fields: [skuId], references: [id])
   skuId     String?
+  skus      Sku[]    @relation(name: "packages")
   updatedAt DateTime @updatedAt
 }
 

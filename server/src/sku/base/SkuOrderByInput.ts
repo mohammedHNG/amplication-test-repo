@@ -52,7 +52,16 @@ class SkuOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  inclusionsId?: SortOrder;
+  packagesId?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  skuDescription?: SortOrder;
 
   @ApiProperty({
     required: false,

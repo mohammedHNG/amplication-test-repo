@@ -27,6 +27,9 @@ import { SkuPackageWhereUniqueInput } from "./SkuPackageWhereUniqueInput";
 import { SkuPackageFindManyArgs } from "./SkuPackageFindManyArgs";
 import { SkuPackageUpdateInput } from "./SkuPackageUpdateInput";
 import { SkuPackage } from "./SkuPackage";
+import { SkuFindManyArgs } from "../../sku/base/SkuFindManyArgs";
+import { Sku } from "../../sku/base/Sku";
+import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class SkuPackageControllerBase {
@@ -222,5 +225,112 @@ export class SkuPackageControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @nestAccessControl.UseRoles({
+    resource: "Sku",
+    action: "read",
+    possession: "any",
+  })
+  @common.Get("/:id/skus")
+  @ApiNestedQuery(SkuFindManyArgs)
+  async findManySkus(
+    @common.Req() request: Request,
+    @common.Param() params: SkuPackageWhereUniqueInput
+  ): Promise<Sku[]> {
+    const query = plainToClass(SkuFindManyArgs, request.query);
+    const results = await this.service.findSkus(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        fulfillmentInfo: true,
+        id: true,
+
+        packages: {
+          select: {
+            id: true,
+          },
+        },
+
+        skuDescription: true,
+        skuId: true,
+        skuName: true,
+        skuType: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "SkuPackage",
+    action: "update",
+    possession: "any",
+  })
+  @common.Post("/:id/skus")
+  async connectSkus(
+    @common.Param() params: SkuPackageWhereUniqueInput,
+    @common.Body() body: SkuWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      skus: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "SkuPackage",
+    action: "update",
+    possession: "any",
+  })
+  @common.Patch("/:id/skus")
+  async updateSkus(
+    @common.Param() params: SkuPackageWhereUniqueInput,
+    @common.Body() body: SkuWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      skus: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "SkuPackage",
+    action: "update",
+    possession: "any",
+  })
+  @common.Delete("/:id/skus")
+  async disconnectSkus(
+    @common.Param() params: SkuPackageWhereUniqueInput,
+    @common.Body() body: SkuWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      skus: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

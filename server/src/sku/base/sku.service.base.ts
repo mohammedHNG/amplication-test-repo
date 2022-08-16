@@ -58,22 +58,11 @@ export class SkuServiceBase {
       .skuPackages(args);
   }
 
-  async findSkus(
-    parentId: string,
-    args: Prisma.SkuFindManyArgs
-  ): Promise<Sku[]> {
+  async getPackages(parentId: string): Promise<SkuPackage | null> {
     return this.prisma.sku
       .findUnique({
         where: { id: parentId },
       })
-      .skus(args);
-  }
-
-  async getInclusions(parentId: string): Promise<Sku | null> {
-    return this.prisma.sku
-      .findUnique({
-        where: { id: parentId },
-      })
-      .inclusions();
+      .packages();
   }
 }

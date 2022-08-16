@@ -15,6 +15,7 @@ import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
+import { SkuListRelationFilter } from "../../sku/base/SkuListRelationFilter";
 @InputType()
 class SkuPackageWhereInput {
   @ApiProperty({
@@ -39,5 +40,17 @@ class SkuPackageWhereInput {
     nullable: true,
   })
   sku?: SkuWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => SkuListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => SkuListRelationFilter)
+  @IsOptional()
+  @Field(() => SkuListRelationFilter, {
+    nullable: true,
+  })
+  skus?: SkuListRelationFilter;
 }
 export { SkuPackageWhereInput };

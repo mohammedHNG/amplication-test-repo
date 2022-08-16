@@ -20,10 +20,9 @@ import {
 } from "class-validator";
 import { GraphQLJSONObject } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { SkuWhereUniqueInput } from "./SkuWhereUniqueInput";
+import { SkuPackageWhereUniqueInput } from "../../skuPackage/base/SkuPackageWhereUniqueInput";
 import { Type } from "class-transformer";
 import { SkuPackageUpdateManyWithoutSkusInput } from "./SkuPackageUpdateManyWithoutSkusInput";
-import { SkuUpdateManyWithoutSkusInput } from "./SkuUpdateManyWithoutSkusInput";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @InputType()
 class SkuUpdateInput {
@@ -39,15 +38,26 @@ class SkuUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => SkuWhereUniqueInput,
+    type: () => SkuPackageWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => SkuWhereUniqueInput)
+  @Type(() => SkuPackageWhereUniqueInput)
   @IsOptional()
-  @Field(() => SkuWhereUniqueInput, {
+  @Field(() => SkuPackageWhereUniqueInput, {
     nullable: true,
   })
-  inclusions?: SkuWhereUniqueInput | null;
+  packages?: SkuPackageWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  skuDescription?: string | null;
 
   @ApiProperty({
     required: false,
@@ -82,18 +92,6 @@ class SkuUpdateInput {
     nullable: true,
   })
   skuPackages?: SkuPackageUpdateManyWithoutSkusInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => SkuUpdateManyWithoutSkusInput,
-  })
-  @ValidateNested()
-  @Type(() => SkuUpdateManyWithoutSkusInput)
-  @IsOptional()
-  @Field(() => SkuUpdateManyWithoutSkusInput, {
-    nullable: true,
-  })
-  skus?: SkuUpdateManyWithoutSkusInput;
 
   @ApiProperty({
     required: false,

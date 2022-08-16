@@ -11,7 +11,6 @@ import {
   SelectArrayInput,
 } from "react-admin";
 
-import { SkuTitle } from "./SkuTitle";
 import { SkuPackageTitle } from "../skuPackage/SkuPackageTitle";
 
 export const SkuEdit = (props: EditProps): React.ReactElement => {
@@ -19,9 +18,14 @@ export const SkuEdit = (props: EditProps): React.ReactElement => {
     <Edit {...props}>
       <SimpleForm>
         <div />
-        <ReferenceInput source="sku.id" reference="Sku" label="inclusions">
-          <SelectInput optionText={SkuTitle} />
+        <ReferenceInput
+          source="skupackage.id"
+          reference="SkuPackage"
+          label="packages"
+        >
+          <SelectInput optionText={SkuPackageTitle} />
         </ReferenceInput>
+        <TextInput label="skuDescription" multiline source="skuDescription" />
         <TextInput label="skuId" source="skuId" />
         <TextInput label="skuName" source="skuName" />
         <ReferenceArrayInput
@@ -31,14 +35,6 @@ export const SkuEdit = (props: EditProps): React.ReactElement => {
           format={(value: any) => value && value.map((v: any) => v.id)}
         >
           <SelectArrayInput optionText={SkuPackageTitle} />
-        </ReferenceArrayInput>
-        <ReferenceArrayInput
-          source="skus"
-          reference="Sku"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={SkuTitle} />
         </ReferenceArrayInput>
         <SelectInput
           source="skuType"
