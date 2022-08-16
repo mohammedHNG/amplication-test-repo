@@ -6,6 +6,7 @@ import { SkuUpdateManyWithoutSkusInput } from "./SkuUpdateManyWithoutSkusInput";
 export type SkuUpdateInput = {
   fulfillmentInfo?: InputJsonValue;
   inclusions?: SkuWhereUniqueInput | null;
+  skuDescription?: string | null;
   skuId?: string | null;
   skuName?: string | null;
   skuPackages?: SkuPackageUpdateManyWithoutSkusInput;

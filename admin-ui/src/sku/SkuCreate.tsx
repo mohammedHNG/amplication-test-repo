@@ -22,6 +22,7 @@ export const SkuCreate = (props: CreateProps): React.ReactElement => {
         <ReferenceInput source="sku.id" reference="Sku" label="inclusions">
           <SelectInput optionText={SkuTitle} />
         </ReferenceInput>
+        <TextInput label="skuDescription" multiline source="skuDescription" />
         <TextInput label="skuId" source="skuId" />
         <TextInput label="skuName" source="skuName" />
         <ReferenceArrayInput

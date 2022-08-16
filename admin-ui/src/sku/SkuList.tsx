@@ -26,6 +26,7 @@ export const SkuList = (props: ListProps): React.ReactElement => {
         <ReferenceField label="inclusions" source="sku.id" reference="Sku">
           <TextField source={SKU_TITLE_FIELD} />
         </ReferenceField>
+        <TextField label="skuDescription" source="skuDescription" />
         <TextField label="skuId" source="skuId" />
         <TextField label="skuName" source="skuName" />
         <TextField label="skuType" source="skuType" />
