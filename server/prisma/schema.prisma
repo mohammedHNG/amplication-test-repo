@@ -17,3 +17,26 @@ model User {
   updatedAt DateTime @updatedAt
   username  String   @unique
 }
+
+model Sku {
+  createdAt    DateTime        @default(now())
+  id           String          @id @default(cuid())
+  inclusions   Sku?            @relation(name: "inclusions", fields: [inclusionsId], references: [id])
+  inclusionsId String?
+  skuId        String?
+  skuName      String?
+  skus         Sku[]           @relation(name: "inclusions")
+  skuType      EnumSkuSkuType?
+  updatedAt    DateTime        @updatedAt
+}
+
+model SkuPackage {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+enum EnumSkuSkuType {
+  Item
+  Package
+}
