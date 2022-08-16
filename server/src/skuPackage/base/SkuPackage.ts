@@ -42,6 +42,15 @@ class SkuPackage {
   sku?: Sku | null;
 
   @ApiProperty({
+    required: false,
+    type: () => [Sku],
+  })
+  @ValidateNested()
+  @Type(() => Sku)
+  @IsOptional()
+  skus?: Array<Sku>;
+
+  @ApiProperty({
     required: true,
   })
   @IsDate()

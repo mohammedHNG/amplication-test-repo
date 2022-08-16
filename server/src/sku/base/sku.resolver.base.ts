@@ -95,9 +95,9 @@ export class SkuResolverBase {
       data: {
         ...args.data,
 
-        inclusions: args.data.inclusions
+        packages: args.data.packages
           ? {
-              connect: args.data.inclusions,
+              connect: args.data.packages,
             }
           : undefined,
       },
@@ -118,9 +118,9 @@ export class SkuResolverBase {
         data: {
           ...args.data,
 
-          inclusions: args.data.inclusions
+          packages: args.data.packages
             ? {
-                connect: args.data.inclusions,
+                connect: args.data.packages,
               }
             : undefined,
         },
@@ -175,34 +175,14 @@ export class SkuResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [Sku])
+  @graphql.ResolveField(() => SkuPackage, { nullable: true })
   @nestAccessControl.UseRoles({
-    resource: "Sku",
+    resource: "SkuPackage",
     action: "read",
     possession: "any",
   })
-  async skus(
-    @graphql.Parent() parent: Sku,
-    @graphql.Args() args: SkuFindManyArgs
-  ): Promise<Sku[]> {
-    const results = await this.service.findSkus(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Sku, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Sku",
-    action: "read",
-    possession: "any",
-  })
-  async inclusions(@graphql.Parent() parent: Sku): Promise<Sku | null> {
-    const result = await this.service.getInclusions(parent.id);
+  async packages(@graphql.Parent() parent: Sku): Promise<SkuPackage | null> {
+    const result = await this.service.getPackages(parent.id);
 
     if (!result) {
       return null;

@@ -52,9 +52,9 @@ export class SkuControllerBase {
       data: {
         ...data,
 
-        inclusions: data.inclusions
+        packages: data.packages
           ? {
-              connect: data.inclusions,
+              connect: data.packages,
             }
           : undefined,
       },
@@ -63,7 +63,7 @@ export class SkuControllerBase {
         fulfillmentInfo: true,
         id: true,
 
-        inclusions: {
+        packages: {
           select: {
             id: true,
           },
@@ -97,7 +97,7 @@ export class SkuControllerBase {
         fulfillmentInfo: true,
         id: true,
 
-        inclusions: {
+        packages: {
           select: {
             id: true,
           },
@@ -132,7 +132,7 @@ export class SkuControllerBase {
         fulfillmentInfo: true,
         id: true,
 
-        inclusions: {
+        packages: {
           select: {
             id: true,
           },
@@ -173,9 +173,9 @@ export class SkuControllerBase {
         data: {
           ...data,
 
-          inclusions: data.inclusions
+          packages: data.packages
             ? {
-                connect: data.inclusions,
+                connect: data.packages,
               }
             : undefined,
         },
@@ -184,7 +184,7 @@ export class SkuControllerBase {
           fulfillmentInfo: true,
           id: true,
 
-          inclusions: {
+          packages: {
             select: {
               id: true,
             },
@@ -227,7 +227,7 @@ export class SkuControllerBase {
           fulfillmentInfo: true,
           id: true,
 
-          inclusions: {
+          packages: {
             select: {
               id: true,
             },
@@ -342,113 +342,6 @@ export class SkuControllerBase {
   ): Promise<void> {
     const data = {
       skuPackages: {
-        disconnect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "Sku",
-    action: "read",
-    possession: "any",
-  })
-  @common.Get("/:id/skus")
-  @ApiNestedQuery(SkuFindManyArgs)
-  async findManySkus(
-    @common.Req() request: Request,
-    @common.Param() params: SkuWhereUniqueInput
-  ): Promise<Sku[]> {
-    const query = plainToClass(SkuFindManyArgs, request.query);
-    const results = await this.service.findSkus(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-        fulfillmentInfo: true,
-        id: true,
-
-        inclusions: {
-          select: {
-            id: true,
-          },
-        },
-
-        skuDescription: true,
-        skuId: true,
-        skuName: true,
-        skuType: true,
-        updatedAt: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "Sku",
-    action: "update",
-    possession: "any",
-  })
-  @common.Post("/:id/skus")
-  async connectSkus(
-    @common.Param() params: SkuWhereUniqueInput,
-    @common.Body() body: SkuWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      skus: {
-        connect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "Sku",
-    action: "update",
-    possession: "any",
-  })
-  @common.Patch("/:id/skus")
-  async updateSkus(
-    @common.Param() params: SkuWhereUniqueInput,
-    @common.Body() body: SkuWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      skus: {
-        set: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "Sku",
-    action: "update",
-    possession: "any",
-  })
-  @common.Delete("/:id/skus")
-  async disconnectSkus(
-    @common.Param() params: SkuWhereUniqueInput,
-    @common.Body() body: SkuWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      skus: {
         disconnect: body,
       },
     };

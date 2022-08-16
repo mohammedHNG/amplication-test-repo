@@ -4,7 +4,7 @@ export type SkuOrderByInput = {
   createdAt?: SortOrder;
   fulfillmentInfo?: SortOrder;
   id?: SortOrder;
-  inclusionsId?: SortOrder;
+  packagesId?: SortOrder;
   skuDescription?: SortOrder;
   skuId?: SortOrder;
   skuName?: SortOrder;

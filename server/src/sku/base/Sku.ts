@@ -54,12 +54,12 @@ class Sku {
 
   @ApiProperty({
     required: false,
-    type: () => Sku,
+    type: () => SkuPackage,
   })
   @ValidateNested()
-  @Type(() => Sku)
+  @Type(() => SkuPackage)
   @IsOptional()
-  inclusions?: Sku | null;
+  packages?: SkuPackage | null;
 
   @ApiProperty({
     required: false,
@@ -102,15 +102,6 @@ class Sku {
   @Type(() => SkuPackage)
   @IsOptional()
   skuPackages?: Array<SkuPackage>;
-
-  @ApiProperty({
-    required: false,
-    type: () => [Sku],
-  })
-  @ValidateNested()
-  @Type(() => Sku)
-  @IsOptional()
-  skus?: Array<Sku>;
 
   @ApiProperty({
     required: false,

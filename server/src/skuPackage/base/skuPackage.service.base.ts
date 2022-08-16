@@ -47,6 +47,17 @@ export class SkuPackageServiceBase {
     return this.prisma.skuPackage.delete(args);
   }
 
+  async findSkus(
+    parentId: string,
+    args: Prisma.SkuFindManyArgs
+  ): Promise<Sku[]> {
+    return this.prisma.skuPackage
+      .findUnique({
+        where: { id: parentId },
+      })
+      .skus(args);
+  }
+
   async getSku(parentId: string): Promise<Sku | null> {
     return this.prisma.skuPackage
       .findUnique({
