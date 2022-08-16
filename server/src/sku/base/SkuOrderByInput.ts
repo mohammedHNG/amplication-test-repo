@@ -52,15 +52,6 @@ class SkuOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  packagesId?: SortOrder;
-
-  @ApiProperty({
-    required: false,
-    enum: ["asc", "desc"],
-  })
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
   skuDescription?: SortOrder;
 
   @ApiProperty({
@@ -70,7 +61,7 @@ class SkuOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  skuId?: SortOrder;
+  skuGroupIdId?: SortOrder;
 
   @ApiProperty({
     required: false,
@@ -80,6 +71,15 @@ class SkuOrderByInput {
     nullable: true,
   })
   skuName?: SortOrder;
+
+  @ApiProperty({
+    required: false,
+    enum: ["asc", "desc"],
+  })
+  @Field(() => SortOrder, {
+    nullable: true,
+  })
+  skuSubGroupIdId?: SortOrder;
 
   @ApiProperty({
     required: false,

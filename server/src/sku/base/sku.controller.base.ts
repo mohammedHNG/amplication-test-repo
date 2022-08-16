@@ -27,9 +27,9 @@ import { SkuWhereUniqueInput } from "./SkuWhereUniqueInput";
 import { SkuFindManyArgs } from "./SkuFindManyArgs";
 import { SkuUpdateInput } from "./SkuUpdateInput";
 import { Sku } from "./Sku";
-import { SkuPackageFindManyArgs } from "../../skuPackage/base/SkuPackageFindManyArgs";
-import { SkuPackage } from "../../skuPackage/base/SkuPackage";
-import { SkuPackageWhereUniqueInput } from "../../skuPackage/base/SkuPackageWhereUniqueInput";
+import { MapSkusToPackageFindManyArgs } from "../../mapSkusToPackage/base/MapSkusToPackageFindManyArgs";
+import { MapSkusToPackage } from "../../mapSkusToPackage/base/MapSkusToPackage";
+import { MapSkusToPackageWhereUniqueInput } from "../../mapSkusToPackage/base/MapSkusToPackageWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class SkuControllerBase {
@@ -52,9 +52,15 @@ export class SkuControllerBase {
       data: {
         ...data,
 
-        packages: data.packages
+        skuGroupId: data.skuGroupId
           ? {
-              connect: data.packages,
+              connect: data.skuGroupId,
+            }
+          : undefined,
+
+        skuSubGroupId: data.skuSubGroupId
+          ? {
+              connect: data.skuSubGroupId,
             }
           : undefined,
       },
@@ -62,16 +68,22 @@ export class SkuControllerBase {
         createdAt: true,
         fulfillmentInfo: true,
         id: true,
+        skuDescription: true,
 
-        packages: {
+        skuGroupId: {
           select: {
             id: true,
           },
         },
 
-        skuDescription: true,
-        skuId: true,
         skuName: true,
+
+        skuSubGroupId: {
+          select: {
+            id: true,
+          },
+        },
+
         skuType: true,
         updatedAt: true,
       },
@@ -96,16 +108,22 @@ export class SkuControllerBase {
         createdAt: true,
         fulfillmentInfo: true,
         id: true,
+        skuDescription: true,
 
-        packages: {
+        skuGroupId: {
           select: {
             id: true,
           },
         },
 
-        skuDescription: true,
-        skuId: true,
         skuName: true,
+
+        skuSubGroupId: {
+          select: {
+            id: true,
+          },
+        },
+
         skuType: true,
         updatedAt: true,
       },
@@ -131,16 +149,22 @@ export class SkuControllerBase {
         createdAt: true,
         fulfillmentInfo: true,
         id: true,
+        skuDescription: true,
 
-        packages: {
+        skuGroupId: {
           select: {
             id: true,
           },
         },
 
-        skuDescription: true,
-        skuId: true,
         skuName: true,
+
+        skuSubGroupId: {
+          select: {
+            id: true,
+          },
+        },
+
         skuType: true,
         updatedAt: true,
       },
@@ -173,9 +197,15 @@ export class SkuControllerBase {
         data: {
           ...data,
 
-          packages: data.packages
+          skuGroupId: data.skuGroupId
             ? {
-                connect: data.packages,
+                connect: data.skuGroupId,
+              }
+            : undefined,
+
+          skuSubGroupId: data.skuSubGroupId
+            ? {
+                connect: data.skuSubGroupId,
               }
             : undefined,
         },
@@ -183,16 +213,22 @@ export class SkuControllerBase {
           createdAt: true,
           fulfillmentInfo: true,
           id: true,
+          skuDescription: true,
 
-          packages: {
+          skuGroupId: {
             select: {
               id: true,
             },
           },
 
-          skuDescription: true,
-          skuId: true,
           skuName: true,
+
+          skuSubGroupId: {
+            select: {
+              id: true,
+            },
+          },
+
           skuType: true,
           updatedAt: true,
         },
@@ -226,16 +262,22 @@ export class SkuControllerBase {
           createdAt: true,
           fulfillmentInfo: true,
           id: true,
+          skuDescription: true,
 
-          packages: {
+          skuGroupId: {
             select: {
               id: true,
             },
           },
 
-          skuDescription: true,
-          skuId: true,
           skuName: true,
+
+          skuSubGroupId: {
+            select: {
+              id: true,
+            },
+          },
+
           skuType: true,
           updatedAt: true,
         },
@@ -252,24 +294,30 @@ export class SkuControllerBase {
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
   @nestAccessControl.UseRoles({
-    resource: "SkuPackage",
+    resource: "MapSkusToPackage",
     action: "read",
     possession: "any",
   })
-  @common.Get("/:id/skuPackages")
-  @ApiNestedQuery(SkuPackageFindManyArgs)
-  async findManySkuPackages(
+  @common.Get("/:id/mapSkusToPackages")
+  @ApiNestedQuery(MapSkusToPackageFindManyArgs)
+  async findManyMapSkusToPackages(
     @common.Req() request: Request,
     @common.Param() params: SkuWhereUniqueInput
-  ): Promise<SkuPackage[]> {
-    const query = plainToClass(SkuPackageFindManyArgs, request.query);
-    const results = await this.service.findSkuPackages(params.id, {
+  ): Promise<MapSkusToPackage[]> {
+    const query = plainToClass(MapSkusToPackageFindManyArgs, request.query);
+    const results = await this.service.findMapSkusToPackages(params.id, {
       ...query,
       select: {
         createdAt: true,
         id: true,
 
-        sku: {
+        packageId: {
+          select: {
+            id: true,
+          },
+        },
+
+        skuId: {
           select: {
             id: true,
           },
@@ -291,13 +339,13 @@ export class SkuControllerBase {
     action: "update",
     possession: "any",
   })
-  @common.Post("/:id/skuPackages")
-  async connectSkuPackages(
+  @common.Post("/:id/mapSkusToPackages")
+  async connectMapSkusToPackages(
     @common.Param() params: SkuWhereUniqueInput,
-    @common.Body() body: SkuPackageWhereUniqueInput[]
+    @common.Body() body: MapSkusToPackageWhereUniqueInput[]
   ): Promise<void> {
     const data = {
-      skuPackages: {
+      mapSkusToPackages: {
         connect: body,
       },
     };
@@ -313,13 +361,13 @@ export class SkuControllerBase {
     action: "update",
     possession: "any",
   })
-  @common.Patch("/:id/skuPackages")
-  async updateSkuPackages(
+  @common.Patch("/:id/mapSkusToPackages")
+  async updateMapSkusToPackages(
     @common.Param() params: SkuWhereUniqueInput,
-    @common.Body() body: SkuPackageWhereUniqueInput[]
+    @common.Body() body: MapSkusToPackageWhereUniqueInput[]
   ): Promise<void> {
     const data = {
-      skuPackages: {
+      mapSkusToPackages: {
         set: body,
       },
     };
@@ -335,13 +383,13 @@ export class SkuControllerBase {
     action: "update",
     possession: "any",
   })
-  @common.Delete("/:id/skuPackages")
-  async disconnectSkuPackages(
+  @common.Delete("/:id/mapSkusToPackages")
+  async disconnectMapSkusToPackages(
     @common.Param() params: SkuWhereUniqueInput,
-    @common.Body() body: SkuPackageWhereUniqueInput[]
+    @common.Body() body: MapSkusToPackageWhereUniqueInput[]
   ): Promise<void> {
     const data = {
-      skuPackages: {
+      mapSkusToPackages: {
         disconnect: body,
       },
     };

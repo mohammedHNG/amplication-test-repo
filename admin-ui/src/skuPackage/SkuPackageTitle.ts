@@ -1,7 +1,7 @@
 import { SkuPackage as TSkuPackage } from "../api/skuPackage/SkuPackage";
 
-export const SKUPACKAGE_TITLE_FIELD = "id";
+export const SKUPACKAGE_TITLE_FIELD = "packageName";
 
 export const SkuPackageTitle = (record: TSkuPackage): string => {
-  return record.id || record.id;
+  return record.packageName || record.id;
 };

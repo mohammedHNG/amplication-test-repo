@@ -1,13 +1,14 @@
 import { InputJsonValue } from "../../types";
-import { SkuPackageWhereUniqueInput } from "../skuPackage/SkuPackageWhereUniqueInput";
-import { SkuPackageCreateNestedManyWithoutSkusInput } from "./SkuPackageCreateNestedManyWithoutSkusInput";
+import { MapSkusToPackageCreateNestedManyWithoutSkusInput } from "./MapSkusToPackageCreateNestedManyWithoutSkusInput";
+import { SkuGroupWhereUniqueInput } from "../skuGroup/SkuGroupWhereUniqueInput";
+import { SkuSubGroupWhereUniqueInput } from "../skuSubGroup/SkuSubGroupWhereUniqueInput";
 
 export type SkuCreateInput = {
   fulfillmentInfo?: InputJsonValue;
-  packages?: SkuPackageWhereUniqueInput | null;
+  mapSkusToPackages?: MapSkusToPackageCreateNestedManyWithoutSkusInput;
   skuDescription?: string | null;
-  skuId?: string | null;
+  skuGroupId?: SkuGroupWhereUniqueInput | null;
   skuName?: string | null;
-  skuPackages?: SkuPackageCreateNestedManyWithoutSkusInput;
+  skuSubGroupId?: SkuSubGroupWhereUniqueInput | null;
   skuType?: "Item" | "Package" | null;
 };

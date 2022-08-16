@@ -20,9 +20,10 @@ import {
 } from "class-validator";
 import { GraphQLJSONObject } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { SkuPackageWhereUniqueInput } from "../../skuPackage/base/SkuPackageWhereUniqueInput";
+import { MapSkusToPackageCreateNestedManyWithoutSkusInput } from "./MapSkusToPackageCreateNestedManyWithoutSkusInput";
 import { Type } from "class-transformer";
-import { SkuPackageCreateNestedManyWithoutSkusInput } from "./SkuPackageCreateNestedManyWithoutSkusInput";
+import { SkuGroupWhereUniqueInput } from "../../skuGroup/base/SkuGroupWhereUniqueInput";
+import { SkuSubGroupWhereUniqueInput } from "../../skuSubGroup/base/SkuSubGroupWhereUniqueInput";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @InputType()
 class SkuCreateInput {
@@ -38,15 +39,15 @@ class SkuCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => SkuPackageWhereUniqueInput,
+    type: () => MapSkusToPackageCreateNestedManyWithoutSkusInput,
   })
   @ValidateNested()
-  @Type(() => SkuPackageWhereUniqueInput)
+  @Type(() => MapSkusToPackageCreateNestedManyWithoutSkusInput)
   @IsOptional()
-  @Field(() => SkuPackageWhereUniqueInput, {
+  @Field(() => MapSkusToPackageCreateNestedManyWithoutSkusInput, {
     nullable: true,
   })
-  packages?: SkuPackageWhereUniqueInput | null;
+  mapSkusToPackages?: MapSkusToPackageCreateNestedManyWithoutSkusInput;
 
   @ApiProperty({
     required: false,
@@ -61,14 +62,15 @@ class SkuCreateInput {
 
   @ApiProperty({
     required: false,
-    type: String,
+    type: () => SkuGroupWhereUniqueInput,
   })
-  @IsString()
+  @ValidateNested()
+  @Type(() => SkuGroupWhereUniqueInput)
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => SkuGroupWhereUniqueInput, {
     nullable: true,
   })
-  skuId?: string | null;
+  skuGroupId?: SkuGroupWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
@@ -83,15 +85,15 @@ class SkuCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => SkuPackageCreateNestedManyWithoutSkusInput,
+    type: () => SkuSubGroupWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => SkuPackageCreateNestedManyWithoutSkusInput)
+  @Type(() => SkuSubGroupWhereUniqueInput)
   @IsOptional()
-  @Field(() => SkuPackageCreateNestedManyWithoutSkusInput, {
+  @Field(() => SkuSubGroupWhereUniqueInput, {
     nullable: true,
   })
-  skuPackages?: SkuPackageCreateNestedManyWithoutSkusInput;
+  skuSubGroupId?: SkuSubGroupWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,

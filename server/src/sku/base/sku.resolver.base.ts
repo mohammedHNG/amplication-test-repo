@@ -25,8 +25,10 @@ import { DeleteSkuArgs } from "./DeleteSkuArgs";
 import { SkuFindManyArgs } from "./SkuFindManyArgs";
 import { SkuFindUniqueArgs } from "./SkuFindUniqueArgs";
 import { Sku } from "./Sku";
-import { SkuPackageFindManyArgs } from "../../skuPackage/base/SkuPackageFindManyArgs";
-import { SkuPackage } from "../../skuPackage/base/SkuPackage";
+import { MapSkusToPackageFindManyArgs } from "../../mapSkusToPackage/base/MapSkusToPackageFindManyArgs";
+import { MapSkusToPackage } from "../../mapSkusToPackage/base/MapSkusToPackage";
+import { SkuGroup } from "../../skuGroup/base/SkuGroup";
+import { SkuSubGroup } from "../../skuSubGroup/base/SkuSubGroup";
 import { SkuService } from "../sku.service";
 
 @graphql.Resolver(() => Sku)
@@ -95,9 +97,15 @@ export class SkuResolverBase {
       data: {
         ...args.data,
 
-        packages: args.data.packages
+        skuGroupId: args.data.skuGroupId
           ? {
-              connect: args.data.packages,
+              connect: args.data.skuGroupId,
+            }
+          : undefined,
+
+        skuSubGroupId: args.data.skuSubGroupId
+          ? {
+              connect: args.data.skuSubGroupId,
             }
           : undefined,
       },
@@ -118,9 +126,15 @@ export class SkuResolverBase {
         data: {
           ...args.data,
 
-          packages: args.data.packages
+          skuGroupId: args.data.skuGroupId
             ? {
-                connect: args.data.packages,
+                connect: args.data.skuGroupId,
+              }
+            : undefined,
+
+          skuSubGroupId: args.data.skuSubGroupId
+            ? {
+                connect: args.data.skuSubGroupId,
               }
             : undefined,
         },
@@ -155,17 +169,17 @@ export class SkuResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [SkuPackage])
+  @graphql.ResolveField(() => [MapSkusToPackage])
   @nestAccessControl.UseRoles({
-    resource: "SkuPackage",
+    resource: "MapSkusToPackage",
     action: "read",
     possession: "any",
   })
-  async skuPackages(
+  async mapSkusToPackages(
     @graphql.Parent() parent: Sku,
-    @graphql.Args() args: SkuPackageFindManyArgs
-  ): Promise<SkuPackage[]> {
-    const results = await this.service.findSkuPackages(parent.id, args);
+    @graphql.Args() args: MapSkusToPackageFindManyArgs
+  ): Promise<MapSkusToPackage[]> {
+    const results = await this.service.findMapSkusToPackages(parent.id, args);
 
     if (!results) {
       return [];
@@ -175,14 +189,32 @@ export class SkuResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => SkuPackage, { nullable: true })
+  @graphql.ResolveField(() => SkuGroup, { nullable: true })
   @nestAccessControl.UseRoles({
-    resource: "SkuPackage",
+    resource: "SkuGroup",
     action: "read",
     possession: "any",
   })
-  async packages(@graphql.Parent() parent: Sku): Promise<SkuPackage | null> {
-    const result = await this.service.getPackages(parent.id);
+  async skuGroupId(@graphql.Parent() parent: Sku): Promise<SkuGroup | null> {
+    const result = await this.service.getSkuGroupId(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => SkuSubGroup, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "SkuSubGroup",
+    action: "read",
+    possession: "any",
+  })
+  async skuSubGroupId(
+    @graphql.Parent() parent: Sku
+  ): Promise<SkuSubGroup | null> {
+    const result = await this.service.getSkuSubGroupId(parent.id);
 
     if (!result) {
       return null;

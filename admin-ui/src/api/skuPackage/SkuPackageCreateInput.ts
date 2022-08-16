@@ -1,7 +1,7 @@
-import { SkuWhereUniqueInput } from "../sku/SkuWhereUniqueInput";
-import { SkuCreateNestedManyWithoutSkuPackagesInput } from "./SkuCreateNestedManyWithoutSkuPackagesInput";
+import { MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput } from "./MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput";
 
 export type SkuPackageCreateInput = {
-  sku?: SkuWhereUniqueInput | null;
-  skus?: SkuCreateNestedManyWithoutSkuPackagesInput;
+  mapSkusToPackages?: MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput;
+  packageName?: string | null;
+  packagePrice?: number | null;
 };
