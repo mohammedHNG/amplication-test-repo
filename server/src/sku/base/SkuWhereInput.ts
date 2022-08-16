@@ -65,6 +65,17 @@ class SkuWhereInput {
   @Field(() => StringNullableFilter, {
     nullable: true,
   })
+  skuDescription?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: StringNullableFilter,
+  })
+  @Type(() => StringNullableFilter)
+  @IsOptional()
+  @Field(() => StringNullableFilter, {
+    nullable: true,
+  })
   skuId?: StringNullableFilter;
 
   @ApiProperty({

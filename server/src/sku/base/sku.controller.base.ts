@@ -69,6 +69,7 @@ export class SkuControllerBase {
           },
         },
 
+        skuDescription: true,
         skuId: true,
         skuName: true,
         skuType: true,
@@ -102,6 +103,7 @@ export class SkuControllerBase {
           },
         },
 
+        skuDescription: true,
         skuId: true,
         skuName: true,
         skuType: true,
@@ -136,6 +138,7 @@ export class SkuControllerBase {
           },
         },
 
+        skuDescription: true,
         skuId: true,
         skuName: true,
         skuType: true,
@@ -187,6 +190,7 @@ export class SkuControllerBase {
             },
           },
 
+          skuDescription: true,
           skuId: true,
           skuName: true,
           skuType: true,
@@ -229,6 +233,7 @@ export class SkuControllerBase {
             },
           },
 
+          skuDescription: true,
           skuId: true,
           skuName: true,
           skuType: true,
@@ -373,6 +378,7 @@ export class SkuControllerBase {
           },
         },
 
+        skuDescription: true,
         skuId: true,
         skuName: true,
         skuType: true,

@@ -25,6 +25,7 @@ model Sku {
   id              String          @id @default(cuid())
   inclusions      Sku?            @relation(name: "inclusions", fields: [inclusionsId], references: [id])
   inclusionsId    String?
+  skuDescription  String?
   skuId           String?
   skuName         String?
   skuPackages     SkuPackage[]

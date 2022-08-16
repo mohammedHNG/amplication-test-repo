@@ -9,6 +9,7 @@ export type SkuWhereInput = {
   fulfillmentInfo?: JsonFilter;
   id?: StringFilter;
   inclusions?: SkuWhereUniqueInput;
+  skuDescription?: StringNullableFilter;
   skuId?: StringNullableFilter;
   skuName?: StringNullableFilter;
   skuPackages?: SkuPackageListRelationFilter;

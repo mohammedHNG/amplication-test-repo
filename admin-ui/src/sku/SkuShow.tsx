@@ -23,6 +23,7 @@ export const SkuShow = (props: ShowProps): React.ReactElement => {
         <ReferenceField label="inclusions" source="sku.id" reference="Sku">
           <TextField source={SKU_TITLE_FIELD} />
         </ReferenceField>
+        <TextField label="skuDescription" source="skuDescription" />
         <TextField label="skuId" source="skuId" />
         <TextField label="skuName" source="skuName" />
         <TextField label="skuType" source="skuType" />
@@ -49,6 +50,7 @@ export const SkuShow = (props: ShowProps): React.ReactElement => {
             <ReferenceField label="inclusions" source="sku.id" reference="Sku">
               <TextField source={SKU_TITLE_FIELD} />
             </ReferenceField>
+            <TextField label="skuDescription" source="skuDescription" />
             <TextField label="skuId" source="skuId" />
             <TextField label="skuName" source="skuName" />
             <TextField label="skuType" source="skuType" />

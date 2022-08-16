@@ -6,6 +6,7 @@ export type Sku = {
   fulfillmentInfo: JsonValue;
   id: string;
   inclusions?: Sku | null;
+  skuDescription: string | null;
   skuId: string | null;
   skuName: string | null;
   skuPackages?: Array<SkuPackage>;

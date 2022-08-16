@@ -6,6 +6,7 @@ import { SkuCreateNestedManyWithoutSkusInput } from "./SkuCreateNestedManyWithou
 export type SkuCreateInput = {
   fulfillmentInfo?: InputJsonValue;
   inclusions?: SkuWhereUniqueInput | null;
+  skuDescription?: string | null;
   skuId?: string | null;
   skuName?: string | null;
   skuPackages?: SkuPackageCreateNestedManyWithoutSkusInput;

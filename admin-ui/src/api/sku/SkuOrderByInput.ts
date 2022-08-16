@@ -5,6 +5,7 @@ export type SkuOrderByInput = {
   fulfillmentInfo?: SortOrder;
   id?: SortOrder;
   inclusionsId?: SortOrder;
+  skuDescription?: SortOrder;
   skuId?: SortOrder;
   skuName?: SortOrder;
   skuType?: SortOrder;
