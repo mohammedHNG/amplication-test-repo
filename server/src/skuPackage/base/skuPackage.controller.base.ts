@@ -27,9 +27,9 @@ import { SkuPackageWhereUniqueInput } from "./SkuPackageWhereUniqueInput";
 import { SkuPackageFindManyArgs } from "./SkuPackageFindManyArgs";
 import { SkuPackageUpdateInput } from "./SkuPackageUpdateInput";
 import { SkuPackage } from "./SkuPackage";
-import { SkuFindManyArgs } from "../../sku/base/SkuFindManyArgs";
-import { Sku } from "../../sku/base/Sku";
-import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
+import { MapSkusToPackageFindManyArgs } from "../../mapSkusToPackage/base/MapSkusToPackageFindManyArgs";
+import { MapSkusToPackage } from "../../mapSkusToPackage/base/MapSkusToPackage";
+import { MapSkusToPackageWhereUniqueInput } from "../../mapSkusToPackage/base/MapSkusToPackageWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class SkuPackageControllerBase {
@@ -51,25 +51,12 @@ export class SkuPackageControllerBase {
     @common.Body() data: SkuPackageCreateInput
   ): Promise<SkuPackage> {
     return await this.service.create({
-      data: {
-        ...data,
-
-        sku: data.sku
-          ? {
-              connect: data.sku,
-            }
-          : undefined,
-      },
+      data: data,
       select: {
         createdAt: true,
         id: true,
-
-        sku: {
-          select: {
-            id: true,
-          },
-        },
-
+        packageName: true,
+        packagePrice: true,
         updatedAt: true,
       },
     });
@@ -92,13 +79,8 @@ export class SkuPackageControllerBase {
       select: {
         createdAt: true,
         id: true,
-
-        sku: {
-          select: {
-            id: true,
-          },
-        },
-
+        packageName: true,
+        packagePrice: true,
         updatedAt: true,
       },
     });
@@ -122,13 +104,8 @@ export class SkuPackageControllerBase {
       select: {
         createdAt: true,
         id: true,
-
-        sku: {
-          select: {
-            id: true,
-          },
-        },
-
+        packageName: true,
+        packagePrice: true,
         updatedAt: true,
       },
     });
@@ -157,25 +134,12 @@ export class SkuPackageControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: {
-          ...data,
-
-          sku: data.sku
-            ? {
-                connect: data.sku,
-              }
-            : undefined,
-        },
+        data: data,
         select: {
           createdAt: true,
           id: true,
-
-          sku: {
-            select: {
-              id: true,
-            },
-          },
-
+          packageName: true,
+          packagePrice: true,
           updatedAt: true,
         },
       });
@@ -207,13 +171,8 @@ export class SkuPackageControllerBase {
         select: {
           createdAt: true,
           id: true,
-
-          sku: {
-            select: {
-              id: true,
-            },
-          },
-
+          packageName: true,
+          packagePrice: true,
           updatedAt: true,
         },
       });
@@ -229,34 +188,35 @@ export class SkuPackageControllerBase {
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
   @nestAccessControl.UseRoles({
-    resource: "Sku",
+    resource: "MapSkusToPackage",
     action: "read",
     possession: "any",
   })
-  @common.Get("/:id/skus")
-  @ApiNestedQuery(SkuFindManyArgs)
-  async findManySkus(
+  @common.Get("/:id/mapSkusToPackages")
+  @ApiNestedQuery(MapSkusToPackageFindManyArgs)
+  async findManyMapSkusToPackages(
     @common.Req() request: Request,
     @common.Param() params: SkuPackageWhereUniqueInput
-  ): Promise<Sku[]> {
-    const query = plainToClass(SkuFindManyArgs, request.query);
-    const results = await this.service.findSkus(params.id, {
+  ): Promise<MapSkusToPackage[]> {
+    const query = plainToClass(MapSkusToPackageFindManyArgs, request.query);
+    const results = await this.service.findMapSkusToPackages(params.id, {
       ...query,
       select: {
         createdAt: true,
-        fulfillmentInfo: true,
         id: true,
 
-        packages: {
+        packageId: {
           select: {
             id: true,
           },
         },
 
-        skuDescription: true,
-        skuId: true,
-        skuName: true,
-        skuType: true,
+        skuId: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -273,13 +233,13 @@ export class SkuPackageControllerBase {
     action: "update",
     possession: "any",
   })
-  @common.Post("/:id/skus")
-  async connectSkus(
+  @common.Post("/:id/mapSkusToPackages")
+  async connectMapSkusToPackages(
     @common.Param() params: SkuPackageWhereUniqueInput,
-    @common.Body() body: SkuWhereUniqueInput[]
+    @common.Body() body: MapSkusToPackageWhereUniqueInput[]
   ): Promise<void> {
     const data = {
-      skus: {
+      mapSkusToPackages: {
         connect: body,
       },
     };
@@ -295,13 +255,13 @@ export class SkuPackageControllerBase {
     action: "update",
     possession: "any",
   })
-  @common.Patch("/:id/skus")
-  async updateSkus(
+  @common.Patch("/:id/mapSkusToPackages")
+  async updateMapSkusToPackages(
     @common.Param() params: SkuPackageWhereUniqueInput,
-    @common.Body() body: SkuWhereUniqueInput[]
+    @common.Body() body: MapSkusToPackageWhereUniqueInput[]
   ): Promise<void> {
     const data = {
-      skus: {
+      mapSkusToPackages: {
         set: body,
       },
     };
@@ -317,13 +277,13 @@ export class SkuPackageControllerBase {
     action: "update",
     possession: "any",
   })
-  @common.Delete("/:id/skus")
-  async disconnectSkus(
+  @common.Delete("/:id/mapSkusToPackages")
+  async disconnectMapSkusToPackages(
     @common.Param() params: SkuPackageWhereUniqueInput,
-    @common.Body() body: SkuWhereUniqueInput[]
+    @common.Body() body: MapSkusToPackageWhereUniqueInput[]
   ): Promise<void> {
     const data = {
-      skus: {
+      mapSkusToPackages: {
         disconnect: body,
       },
     };

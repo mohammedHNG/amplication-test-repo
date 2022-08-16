@@ -6,9 +6,9 @@ import {
   ShowProps,
   DateField,
   TextField,
-  ReferenceField,
   ReferenceManyField,
   Datagrid,
+  ReferenceField,
 } from "react-admin";
 
 import { SKUPACKAGE_TITLE_FIELD } from "./SkuPackageTitle";
@@ -20,26 +20,27 @@ export const SkuPackageShow = (props: ShowProps): React.ReactElement => {
       <SimpleShowLayout>
         <DateField source="createdAt" label="Created At" />
         <TextField label="ID" source="id" />
-        <ReferenceField label="sku" source="sku.id" reference="Sku">
-          <TextField source={SKU_TITLE_FIELD} />
-        </ReferenceField>
+        <TextField label="Package Name" source="packageName" />
+        <TextField label="Package Price" source="packagePrice" />
         <DateField source="updatedAt" label="Updated At" />
-        <ReferenceManyField reference="Sku" target="SkuPackageId" label="Skus">
+        <ReferenceManyField
+          reference="MapSkusToPackage"
+          target="SkuPackageId"
+          label="Map Skus To Packages"
+        >
           <Datagrid rowClick="show">
             <DateField source="createdAt" label="Created At" />
-            <TextField label="fulfillmentInfo" source="fulfillmentInfo" />
             <TextField label="ID" source="id" />
             <ReferenceField
-              label="packages"
+              label="Package"
               source="skupackage.id"
               reference="SkuPackage"
             >
               <TextField source={SKUPACKAGE_TITLE_FIELD} />
             </ReferenceField>
-            <TextField label="skuDescription" source="skuDescription" />
-            <TextField label="skuId" source="skuId" />
-            <TextField label="skuName" source="skuName" />
-            <TextField label="skuType" source="skuType" />
+            <ReferenceField label="Sku" source="sku.id" reference="Sku">
+              <TextField source={SKU_TITLE_FIELD} />
+            </ReferenceField>
             <DateField source="updatedAt" label="Updated At" />
           </Datagrid>
         </ReferenceManyField>

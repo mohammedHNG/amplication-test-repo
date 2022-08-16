@@ -1,9 +1,11 @@
 import { StringFilter } from "../../util/StringFilter";
-import { SkuWhereUniqueInput } from "../sku/SkuWhereUniqueInput";
-import { SkuListRelationFilter } from "../sku/SkuListRelationFilter";
+import { MapSkusToPackageListRelationFilter } from "../mapSkusToPackage/MapSkusToPackageListRelationFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { FloatNullableFilter } from "../../util/FloatNullableFilter";
 
 export type SkuPackageWhereInput = {
   id?: StringFilter;
-  sku?: SkuWhereUniqueInput;
-  skus?: SkuListRelationFilter;
+  mapSkusToPackages?: MapSkusToPackageListRelationFilter;
+  packageName?: StringNullableFilter;
+  packagePrice?: FloatNullableFilter;
 };

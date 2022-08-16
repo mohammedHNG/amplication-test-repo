@@ -11,34 +11,48 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
-import { ValidateNested, IsOptional } from "class-validator";
+import { MapSkusToPackageUpdateManyWithoutSkuPackagesInput } from "./MapSkusToPackageUpdateManyWithoutSkuPackagesInput";
+import {
+  ValidateNested,
+  IsOptional,
+  IsString,
+  IsNumber,
+} from "class-validator";
 import { Type } from "class-transformer";
-import { SkuUpdateManyWithoutSkuPackagesInput } from "./SkuUpdateManyWithoutSkuPackagesInput";
 @InputType()
 class SkuPackageUpdateInput {
   @ApiProperty({
     required: false,
-    type: () => SkuWhereUniqueInput,
+    type: () => MapSkusToPackageUpdateManyWithoutSkuPackagesInput,
   })
   @ValidateNested()
-  @Type(() => SkuWhereUniqueInput)
+  @Type(() => MapSkusToPackageUpdateManyWithoutSkuPackagesInput)
   @IsOptional()
-  @Field(() => SkuWhereUniqueInput, {
+  @Field(() => MapSkusToPackageUpdateManyWithoutSkuPackagesInput, {
     nullable: true,
   })
-  sku?: SkuWhereUniqueInput | null;
+  mapSkusToPackages?: MapSkusToPackageUpdateManyWithoutSkuPackagesInput;
 
   @ApiProperty({
     required: false,
-    type: () => SkuUpdateManyWithoutSkuPackagesInput,
+    type: String,
   })
-  @ValidateNested()
-  @Type(() => SkuUpdateManyWithoutSkuPackagesInput)
+  @IsString()
   @IsOptional()
-  @Field(() => SkuUpdateManyWithoutSkuPackagesInput, {
+  @Field(() => String, {
     nullable: true,
   })
-  skus?: SkuUpdateManyWithoutSkuPackagesInput;
+  packageName?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsNumber()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  packagePrice?: number | null;
 }
 export { SkuPackageUpdateInput };

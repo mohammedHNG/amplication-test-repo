@@ -11,34 +11,48 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
-import { ValidateNested, IsOptional } from "class-validator";
+import { MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput } from "./MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput";
+import {
+  ValidateNested,
+  IsOptional,
+  IsString,
+  IsNumber,
+} from "class-validator";
 import { Type } from "class-transformer";
-import { SkuCreateNestedManyWithoutSkuPackagesInput } from "./SkuCreateNestedManyWithoutSkuPackagesInput";
 @InputType()
 class SkuPackageCreateInput {
   @ApiProperty({
     required: false,
-    type: () => SkuWhereUniqueInput,
+    type: () => MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput,
   })
   @ValidateNested()
-  @Type(() => SkuWhereUniqueInput)
+  @Type(() => MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput)
   @IsOptional()
-  @Field(() => SkuWhereUniqueInput, {
+  @Field(() => MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput, {
     nullable: true,
   })
-  sku?: SkuWhereUniqueInput | null;
+  mapSkusToPackages?: MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput;
 
   @ApiProperty({
     required: false,
-    type: () => SkuCreateNestedManyWithoutSkuPackagesInput,
+    type: String,
   })
-  @ValidateNested()
-  @Type(() => SkuCreateNestedManyWithoutSkuPackagesInput)
+  @IsString()
   @IsOptional()
-  @Field(() => SkuCreateNestedManyWithoutSkuPackagesInput, {
+  @Field(() => String, {
     nullable: true,
   })
-  skus?: SkuCreateNestedManyWithoutSkuPackagesInput;
+  packageName?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: Number,
+  })
+  @IsNumber()
+  @IsOptional()
+  @Field(() => Number, {
+    nullable: true,
+  })
+  packagePrice?: number | null;
 }
 export { SkuPackageCreateInput };

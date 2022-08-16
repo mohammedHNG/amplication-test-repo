@@ -4,41 +4,49 @@ import {
   Create,
   SimpleForm,
   CreateProps,
-  ReferenceInput,
-  SelectInput,
-  TextInput,
   ReferenceArrayInput,
   SelectArrayInput,
+  TextInput,
+  ReferenceInput,
+  SelectInput,
 } from "react-admin";
 
-import { SkuPackageTitle } from "../skuPackage/SkuPackageTitle";
+import { MapSkusToPackageTitle } from "../mapSkusToPackage/MapSkusToPackageTitle";
+import { SkuGroupTitle } from "../skuGroup/SkuGroupTitle";
+import { SkuSubGroupTitle } from "../skuSubGroup/SkuSubGroupTitle";
 
 export const SkuCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
         <div />
-        <ReferenceInput
-          source="skupackage.id"
-          reference="SkuPackage"
-          label="packages"
-        >
-          <SelectInput optionText={SkuPackageTitle} />
-        </ReferenceInput>
-        <TextInput label="skuDescription" multiline source="skuDescription" />
-        <TextInput label="skuId" source="skuId" />
-        <TextInput label="skuName" source="skuName" />
         <ReferenceArrayInput
-          source="skuPackages"
-          reference="SkuPackage"
+          source="mapSkusToPackages"
+          reference="MapSkusToPackage"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}
         >
-          <SelectArrayInput optionText={SkuPackageTitle} />
+          <SelectArrayInput optionText={MapSkusToPackageTitle} />
         </ReferenceArrayInput>
+        <TextInput label="Sku Description" multiline source="skuDescription" />
+        <ReferenceInput
+          source="skugroup.id"
+          reference="SkuGroup"
+          label="Sku Group"
+        >
+          <SelectInput optionText={SkuGroupTitle} />
+        </ReferenceInput>
+        <TextInput label="Sku Name" source="skuName" />
+        <ReferenceInput
+          source="skusubgroup.id"
+          reference="SkuSubGroup"
+          label="Sku Sub Group"
+        >
+          <SelectInput optionText={SkuSubGroupTitle} />
+        </ReferenceInput>
         <SelectInput
           source="skuType"
-          label="skuType"
+          label="Sku Type"
           choices={[
             { label: "item", value: "Item" },
             { label: "package", value: "Package" },

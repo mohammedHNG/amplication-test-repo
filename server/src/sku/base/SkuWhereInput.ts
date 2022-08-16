@@ -15,9 +15,9 @@ import { JsonFilter } from "../../util/JsonFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested, IsEnum } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
-import { SkuPackageWhereUniqueInput } from "../../skuPackage/base/SkuPackageWhereUniqueInput";
+import { MapSkusToPackageListRelationFilter } from "../../mapSkusToPackage/base/MapSkusToPackageListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
-import { SkuPackageListRelationFilter } from "../../skuPackage/base/SkuPackageListRelationFilter";
+import { SkuGroupWhereUniqueInput } from "../../skuGroup/base/SkuGroupWhereUniqueInput";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @InputType()
 class SkuWhereInput {
@@ -45,15 +45,15 @@ class SkuWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => SkuPackageWhereUniqueInput,
+    type: () => MapSkusToPackageListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => SkuPackageWhereUniqueInput)
+  @Type(() => MapSkusToPackageListRelationFilter)
   @IsOptional()
-  @Field(() => SkuPackageWhereUniqueInput, {
+  @Field(() => MapSkusToPackageListRelationFilter, {
     nullable: true,
   })
-  packages?: SkuPackageWhereUniqueInput;
+  mapSkusToPackages?: MapSkusToPackageListRelationFilter;
 
   @ApiProperty({
     required: false,
@@ -68,14 +68,15 @@ class SkuWhereInput {
 
   @ApiProperty({
     required: false,
-    type: StringNullableFilter,
+    type: () => SkuGroupWhereUniqueInput,
   })
-  @Type(() => StringNullableFilter)
+  @ValidateNested()
+  @Type(() => SkuGroupWhereUniqueInput)
   @IsOptional()
-  @Field(() => StringNullableFilter, {
+  @Field(() => SkuGroupWhereUniqueInput, {
     nullable: true,
   })
-  skuId?: StringNullableFilter;
+  skuGroupId?: SkuGroupWhereUniqueInput;
 
   @ApiProperty({
     required: false,
@@ -87,18 +88,6 @@ class SkuWhereInput {
     nullable: true,
   })
   skuName?: StringNullableFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => SkuPackageListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => SkuPackageListRelationFilter)
-  @IsOptional()
-  @Field(() => SkuPackageListRelationFilter, {
-    nullable: true,
-  })
-  skuPackages?: SkuPackageListRelationFilter;
 
   @ApiProperty({
     required: false,

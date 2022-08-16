@@ -4,29 +4,28 @@ import {
   Edit,
   SimpleForm,
   EditProps,
-  ReferenceInput,
-  SelectInput,
   ReferenceArrayInput,
   SelectArrayInput,
+  TextInput,
+  NumberInput,
 } from "react-admin";
 
-import { SkuTitle } from "../sku/SkuTitle";
+import { MapSkusToPackageTitle } from "../mapSkusToPackage/MapSkusToPackageTitle";
 
 export const SkuPackageEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
-        <ReferenceInput source="sku.id" reference="Sku" label="sku">
-          <SelectInput optionText={SkuTitle} />
-        </ReferenceInput>
         <ReferenceArrayInput
-          source="skus"
-          reference="Sku"
+          source="mapSkusToPackages"
+          reference="MapSkusToPackage"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}
         >
-          <SelectArrayInput optionText={SkuTitle} />
+          <SelectArrayInput optionText={MapSkusToPackageTitle} />
         </ReferenceArrayInput>
+        <TextInput label="Package Name" source="packageName" />
+        <NumberInput label="Package Price" source="packagePrice" />
       </SimpleForm>
     </Edit>
   );

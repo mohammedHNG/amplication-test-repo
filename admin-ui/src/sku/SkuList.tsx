@@ -8,7 +8,8 @@ import {
   ReferenceField,
 } from "react-admin";
 import Pagination from "../Components/Pagination";
-import { SKUPACKAGE_TITLE_FIELD } from "../skuPackage/SkuPackageTitle";
+import { SKUGROUP_TITLE_FIELD } from "../skuGroup/SkuGroupTitle";
+import { SKUSUBGROUP_TITLE_FIELD } from "../skuSubGroup/SkuSubGroupTitle";
 
 export const SkuList = (props: ListProps): React.ReactElement => {
   return (
@@ -21,19 +22,25 @@ export const SkuList = (props: ListProps): React.ReactElement => {
     >
       <Datagrid rowClick="show">
         <DateField source="createdAt" label="Created At" />
-        <TextField label="fulfillmentInfo" source="fulfillmentInfo" />
+        <TextField label="Fulfillment Info" source="fulfillmentInfo" />
         <TextField label="ID" source="id" />
+        <TextField label="Sku Description" source="skuDescription" />
         <ReferenceField
-          label="packages"
-          source="skupackage.id"
-          reference="SkuPackage"
+          label="Sku Group"
+          source="skugroup.id"
+          reference="SkuGroup"
         >
-          <TextField source={SKUPACKAGE_TITLE_FIELD} />
+          <TextField source={SKUGROUP_TITLE_FIELD} />
         </ReferenceField>
-        <TextField label="skuDescription" source="skuDescription" />
-        <TextField label="skuId" source="skuId" />
-        <TextField label="skuName" source="skuName" />
-        <TextField label="skuType" source="skuType" />
+        <TextField label="Sku Name" source="skuName" />
+        <ReferenceField
+          label="Sku Sub Group"
+          source="skusubgroup.id"
+          reference="SkuSubGroup"
+        >
+          <TextField source={SKUSUBGROUP_TITLE_FIELD} />
+        </ReferenceField>
+        <TextField label="Sku Type" source="skuType" />
         <DateField source="updatedAt" label="Updated At" />
       </Datagrid>
     </List>

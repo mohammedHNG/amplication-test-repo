@@ -1,13 +1,14 @@
 import { InputJsonValue } from "../../types";
-import { SkuPackageWhereUniqueInput } from "../skuPackage/SkuPackageWhereUniqueInput";
-import { SkuPackageUpdateManyWithoutSkusInput } from "./SkuPackageUpdateManyWithoutSkusInput";
+import { MapSkusToPackageUpdateManyWithoutSkusInput } from "./MapSkusToPackageUpdateManyWithoutSkusInput";
+import { SkuGroupWhereUniqueInput } from "../skuGroup/SkuGroupWhereUniqueInput";
+import { SkuSubGroupWhereUniqueInput } from "../skuSubGroup/SkuSubGroupWhereUniqueInput";
 
 export type SkuUpdateInput = {
   fulfillmentInfo?: InputJsonValue;
-  packages?: SkuPackageWhereUniqueInput | null;
+  mapSkusToPackages?: MapSkusToPackageUpdateManyWithoutSkusInput;
   skuDescription?: string | null;
-  skuId?: string | null;
+  skuGroupId?: SkuGroupWhereUniqueInput | null;
   skuName?: string | null;
-  skuPackages?: SkuPackageUpdateManyWithoutSkusInput;
+  skuSubGroupId?: SkuSubGroupWhereUniqueInput | null;
   skuType?: "Item" | "Package" | null;
 };
