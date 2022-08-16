@@ -48,10 +48,25 @@ export class SkuPackageControllerBase {
     @common.Body() data: SkuPackageCreateInput
   ): Promise<SkuPackage> {
     return await this.service.create({
-      data: data,
+      data: {
+        ...data,
+
+        sku: data.sku
+          ? {
+              connect: data.sku,
+            }
+          : undefined,
+      },
       select: {
         createdAt: true,
         id: true,
+
+        sku: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -74,6 +89,13 @@ export class SkuPackageControllerBase {
       select: {
         createdAt: true,
         id: true,
+
+        sku: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -97,6 +119,13 @@ export class SkuPackageControllerBase {
       select: {
         createdAt: true,
         id: true,
+
+        sku: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -125,10 +154,25 @@ export class SkuPackageControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          sku: data.sku
+            ? {
+                connect: data.sku,
+              }
+            : undefined,
+        },
         select: {
           createdAt: true,
           id: true,
+
+          sku: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
         },
       });
@@ -160,6 +204,13 @@ export class SkuPackageControllerBase {
         select: {
           createdAt: true,
           id: true,
+
+          sku: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
         },
       });

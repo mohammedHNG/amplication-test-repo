@@ -14,25 +14,30 @@ model User {
   lastName  String?
   password  String
   roles     String[]
+  uid       String?  @unique
   updatedAt DateTime @updatedAt
   username  String   @unique
 }
 
 model Sku {
-  createdAt    DateTime        @default(now())
-  id           String          @id @default(cuid())
-  inclusions   Sku?            @relation(name: "inclusions", fields: [inclusionsId], references: [id])
-  inclusionsId String?
-  skuId        String?
-  skuName      String?
-  skus         Sku[]           @relation(name: "inclusions")
-  skuType      EnumSkuSkuType?
-  updatedAt    DateTime        @updatedAt
+  createdAt       DateTime        @default(now())
+  fulfillmentInfo Json?
+  id              String          @id @default(cuid())
+  inclusions      Sku?            @relation(name: "inclusions", fields: [inclusionsId], references: [id])
+  inclusionsId    String?
+  skuId           String?
+  skuName         String?
+  skuPackages     SkuPackage[]
+  skus            Sku[]           @relation(name: "inclusions")
+  skuType         EnumSkuSkuType?
+  updatedAt       DateTime        @updatedAt
 }
 
 model SkuPackage {
   createdAt DateTime @default(now())
   id        String   @id @default(cuid())
+  sku       Sku?     @relation(fields: [skuId], references: [id])
+  skuId     String?
   updatedAt DateTime @updatedAt
 }
 

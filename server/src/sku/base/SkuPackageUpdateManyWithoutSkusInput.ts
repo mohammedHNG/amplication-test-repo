@@ -10,49 +10,35 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { InputType, Field } from "@nestjs/graphql";
+import { SkuPackageWhereUniqueInput } from "../../skuPackage/base/SkuPackageWhereUniqueInput";
 import { ApiProperty } from "@nestjs/swagger";
-import { SortOrder } from "../../util/SortOrder";
-
-@InputType({
-  isAbstract: true,
-  description: undefined,
-})
-class SkuPackageOrderByInput {
-  @ApiProperty({
-    required: false,
-    enum: ["asc", "desc"],
-  })
-  @Field(() => SortOrder, {
+@InputType()
+class SkuPackageUpdateManyWithoutSkusInput {
+  @Field(() => [SkuPackageWhereUniqueInput], {
     nullable: true,
   })
-  createdAt?: SortOrder;
-
   @ApiProperty({
     required: false,
-    enum: ["asc", "desc"],
+    type: () => [SkuPackageWhereUniqueInput],
   })
-  @Field(() => SortOrder, {
+  connect?: Array<SkuPackageWhereUniqueInput>;
+
+  @Field(() => [SkuPackageWhereUniqueInput], {
     nullable: true,
   })
-  id?: SortOrder;
-
   @ApiProperty({
     required: false,
-    enum: ["asc", "desc"],
+    type: () => [SkuPackageWhereUniqueInput],
   })
-  @Field(() => SortOrder, {
+  disconnect?: Array<SkuPackageWhereUniqueInput>;
+
+  @Field(() => [SkuPackageWhereUniqueInput], {
     nullable: true,
   })
-  skuId?: SortOrder;
-
   @ApiProperty({
     required: false,
-    enum: ["asc", "desc"],
+    type: () => [SkuPackageWhereUniqueInput],
   })
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
-  updatedAt?: SortOrder;
+  set?: Array<SkuPackageWhereUniqueInput>;
 }
-
-export { SkuPackageOrderByInput };
+export { SkuPackageUpdateManyWithoutSkusInput };

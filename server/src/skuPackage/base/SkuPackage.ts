@@ -11,8 +11,9 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString } from "class-validator";
+import { IsDate, IsString, ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
+import { Sku } from "../../sku/base/Sku";
 @ObjectType()
 class SkuPackage {
   @ApiProperty({
@@ -30,6 +31,15 @@ class SkuPackage {
   @IsString()
   @Field(() => String)
   id!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => Sku,
+  })
+  @ValidateNested()
+  @Type(() => Sku)
+  @IsOptional()
+  sku?: Sku | null;
 
   @ApiProperty({
     required: true,

@@ -10,7 +10,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, SkuPackage } from "@prisma/client";
+import { Prisma, SkuPackage, Sku } from "@prisma/client";
 
 export class SkuPackageServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -45,5 +45,13 @@ export class SkuPackageServiceBase {
     args: Prisma.SelectSubset<T, Prisma.SkuPackageDeleteArgs>
   ): Promise<SkuPackage> {
     return this.prisma.skuPackage.delete(args);
+  }
+
+  async getSku(parentId: string): Promise<Sku | null> {
+    return this.prisma.skuPackage
+      .findUnique({
+        where: { id: parentId },
+      })
+      .sku();
   }
 }

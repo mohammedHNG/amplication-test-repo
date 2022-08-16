@@ -13,12 +13,16 @@ import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import {
   IsDate,
+  IsJSON,
+  IsOptional,
   IsString,
   ValidateNested,
-  IsOptional,
   IsEnum,
 } from "class-validator";
 import { Type } from "class-transformer";
+import { GraphQLJSONObject } from "graphql-type-json";
+import { JsonValue } from "type-fest";
+import { SkuPackage } from "../../skuPackage/base/SkuPackage";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @ObjectType()
 class Sku {
@@ -29,6 +33,16 @@ class Sku {
   @Type(() => Date)
   @Field(() => Date)
   createdAt!: Date;
+
+  @ApiProperty({
+    required: false,
+  })
+  @IsJSON()
+  @IsOptional()
+  @Field(() => GraphQLJSONObject, {
+    nullable: true,
+  })
+  fulfillmentInfo!: JsonValue;
 
   @ApiProperty({
     required: true,
@@ -68,6 +82,15 @@ class Sku {
     nullable: true,
   })
   skuName!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [SkuPackage],
+  })
+  @ValidateNested()
+  @Type(() => SkuPackage)
+  @IsOptional()
+  skuPackages?: Array<SkuPackage>;
 
   @ApiProperty({
     required: false,

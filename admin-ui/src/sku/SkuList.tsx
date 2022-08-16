@@ -21,6 +21,7 @@ export const SkuList = (props: ListProps): React.ReactElement => {
     >
       <Datagrid rowClick="show">
         <DateField source="createdAt" label="Created At" />
+        <TextField label="fulfillmentInfo" source="fulfillmentInfo" />
         <TextField label="ID" source="id" />
         <ReferenceField label="inclusions" source="sku.id" reference="Sku">
           <TextField source={SKU_TITLE_FIELD} />

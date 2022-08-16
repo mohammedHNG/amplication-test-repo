@@ -27,6 +27,9 @@ import { SkuWhereUniqueInput } from "./SkuWhereUniqueInput";
 import { SkuFindManyArgs } from "./SkuFindManyArgs";
 import { SkuUpdateInput } from "./SkuUpdateInput";
 import { Sku } from "./Sku";
+import { SkuPackageFindManyArgs } from "../../skuPackage/base/SkuPackageFindManyArgs";
+import { SkuPackage } from "../../skuPackage/base/SkuPackage";
+import { SkuPackageWhereUniqueInput } from "../../skuPackage/base/SkuPackageWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class SkuControllerBase {
@@ -57,6 +60,7 @@ export class SkuControllerBase {
       },
       select: {
         createdAt: true,
+        fulfillmentInfo: true,
         id: true,
 
         inclusions: {
@@ -89,6 +93,7 @@ export class SkuControllerBase {
       ...args,
       select: {
         createdAt: true,
+        fulfillmentInfo: true,
         id: true,
 
         inclusions: {
@@ -122,6 +127,7 @@ export class SkuControllerBase {
       where: params,
       select: {
         createdAt: true,
+        fulfillmentInfo: true,
         id: true,
 
         inclusions: {
@@ -172,6 +178,7 @@ export class SkuControllerBase {
         },
         select: {
           createdAt: true,
+          fulfillmentInfo: true,
           id: true,
 
           inclusions: {
@@ -213,6 +220,7 @@ export class SkuControllerBase {
         where: params,
         select: {
           createdAt: true,
+          fulfillmentInfo: true,
           id: true,
 
           inclusions: {
@@ -239,6 +247,108 @@ export class SkuControllerBase {
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
   @nestAccessControl.UseRoles({
+    resource: "SkuPackage",
+    action: "read",
+    possession: "any",
+  })
+  @common.Get("/:id/skuPackages")
+  @ApiNestedQuery(SkuPackageFindManyArgs)
+  async findManySkuPackages(
+    @common.Req() request: Request,
+    @common.Param() params: SkuWhereUniqueInput
+  ): Promise<SkuPackage[]> {
+    const query = plainToClass(SkuPackageFindManyArgs, request.query);
+    const results = await this.service.findSkuPackages(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        id: true,
+
+        sku: {
+          select: {
+            id: true,
+          },
+        },
+
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Sku",
+    action: "update",
+    possession: "any",
+  })
+  @common.Post("/:id/skuPackages")
+  async connectSkuPackages(
+    @common.Param() params: SkuWhereUniqueInput,
+    @common.Body() body: SkuPackageWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      skuPackages: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Sku",
+    action: "update",
+    possession: "any",
+  })
+  @common.Patch("/:id/skuPackages")
+  async updateSkuPackages(
+    @common.Param() params: SkuWhereUniqueInput,
+    @common.Body() body: SkuPackageWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      skuPackages: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Sku",
+    action: "update",
+    possession: "any",
+  })
+  @common.Delete("/:id/skuPackages")
+  async disconnectSkuPackages(
+    @common.Param() params: SkuWhereUniqueInput,
+    @common.Body() body: SkuPackageWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      skuPackages: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @nestAccessControl.UseRoles({
     resource: "Sku",
     action: "read",
     possession: "any",
@@ -254,6 +364,7 @@ export class SkuControllerBase {
       ...query,
       select: {
         createdAt: true,
+        fulfillmentInfo: true,
         id: true,
 
         inclusions: {

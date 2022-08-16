@@ -18,10 +18,14 @@ import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { CreateSkuPackageArgs } from "./CreateSkuPackageArgs";
+import { UpdateSkuPackageArgs } from "./UpdateSkuPackageArgs";
 import { DeleteSkuPackageArgs } from "./DeleteSkuPackageArgs";
 import { SkuPackageFindManyArgs } from "./SkuPackageFindManyArgs";
 import { SkuPackageFindUniqueArgs } from "./SkuPackageFindUniqueArgs";
 import { SkuPackage } from "./SkuPackage";
+import { Sku } from "../../sku/base/Sku";
 import { SkuPackageService } from "../skuPackage.service";
 
 @graphql.Resolver(() => SkuPackage)
@@ -81,6 +85,63 @@ export class SkuPackageResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @graphql.Mutation(() => SkuPackage)
+  @nestAccessControl.UseRoles({
+    resource: "SkuPackage",
+    action: "create",
+    possession: "any",
+  })
+  async createSkuPackage(
+    @graphql.Args() args: CreateSkuPackageArgs
+  ): Promise<SkuPackage> {
+    return await this.service.create({
+      ...args,
+      data: {
+        ...args.data,
+
+        sku: args.data.sku
+          ? {
+              connect: args.data.sku,
+            }
+          : undefined,
+      },
+    });
+  }
+
+  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @graphql.Mutation(() => SkuPackage)
+  @nestAccessControl.UseRoles({
+    resource: "SkuPackage",
+    action: "update",
+    possession: "any",
+  })
+  async updateSkuPackage(
+    @graphql.Args() args: UpdateSkuPackageArgs
+  ): Promise<SkuPackage | null> {
+    try {
+      return await this.service.update({
+        ...args,
+        data: {
+          ...args.data,
+
+          sku: args.data.sku
+            ? {
+                connect: args.data.sku,
+              }
+            : undefined,
+        },
+      });
+    } catch (error) {
+      if (isRecordNotFoundError(error)) {
+        throw new apollo.ApolloError(
+          `No resource was found for ${JSON.stringify(args.where)}`
+        );
+      }
+      throw error;
+    }
+  }
+
   @graphql.Mutation(() => SkuPackage)
   @nestAccessControl.UseRoles({
     resource: "SkuPackage",
@@ -100,5 +161,21 @@ export class SkuPackageResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Sku, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Sku",
+    action: "read",
+    possession: "any",
+  })
+  async sku(@graphql.Parent() parent: SkuPackage): Promise<Sku | null> {
+    const result = await this.service.getSku(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

@@ -11,13 +11,32 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
+import {
+  IsJSON,
+  IsOptional,
+  ValidateNested,
+  IsString,
+  IsEnum,
+} from "class-validator";
+import { GraphQLJSONObject } from "graphql-type-json";
+import { InputJsonValue } from "../../types";
 import { SkuWhereUniqueInput } from "./SkuWhereUniqueInput";
-import { ValidateNested, IsOptional, IsString, IsEnum } from "class-validator";
 import { Type } from "class-transformer";
+import { SkuPackageUpdateManyWithoutSkusInput } from "./SkuPackageUpdateManyWithoutSkusInput";
 import { SkuUpdateManyWithoutSkusInput } from "./SkuUpdateManyWithoutSkusInput";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @InputType()
 class SkuUpdateInput {
+  @ApiProperty({
+    required: false,
+  })
+  @IsJSON()
+  @IsOptional()
+  @Field(() => GraphQLJSONObject, {
+    nullable: true,
+  })
+  fulfillmentInfo?: InputJsonValue;
+
   @ApiProperty({
     required: false,
     type: () => SkuWhereUniqueInput,
@@ -51,6 +70,18 @@ class SkuUpdateInput {
     nullable: true,
   })
   skuName?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => SkuPackageUpdateManyWithoutSkusInput,
+  })
+  @ValidateNested()
+  @Type(() => SkuPackageUpdateManyWithoutSkusInput)
+  @IsOptional()
+  @Field(() => SkuPackageUpdateManyWithoutSkusInput, {
+    nullable: true,
+  })
+  skuPackages?: SkuPackageUpdateManyWithoutSkusInput;
 
   @ApiProperty({
     required: false,

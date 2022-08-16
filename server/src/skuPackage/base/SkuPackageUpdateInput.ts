@@ -9,5 +9,23 @@ https://docs.amplication.com/docs/how-to/custom-code
 
 ------------------------------------------------------------------------------
   */
-class SkuPackageUpdateInput {}
+import { InputType, Field } from "@nestjs/graphql";
+import { ApiProperty } from "@nestjs/swagger";
+import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
+import { ValidateNested, IsOptional } from "class-validator";
+import { Type } from "class-transformer";
+@InputType()
+class SkuPackageUpdateInput {
+  @ApiProperty({
+    required: false,
+    type: () => SkuWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => SkuWhereUniqueInput)
+  @IsOptional()
+  @Field(() => SkuWhereUniqueInput, {
+    nullable: true,
+  })
+  sku?: SkuWhereUniqueInput | null;
+}
 export { SkuPackageUpdateInput };

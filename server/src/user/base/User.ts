@@ -64,6 +64,17 @@ class User {
   roles!: Array<string>;
 
   @ApiProperty({
+    required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  uid!: string | null;
+
+  @ApiProperty({
     required: true,
   })
   @IsDate()

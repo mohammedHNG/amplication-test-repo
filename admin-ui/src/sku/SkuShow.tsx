@@ -18,6 +18,7 @@ export const SkuShow = (props: ShowProps): React.ReactElement => {
     <Show {...props}>
       <SimpleShowLayout>
         <DateField source="createdAt" label="Created At" />
+        <TextField label="fulfillmentInfo" source="fulfillmentInfo" />
         <TextField label="ID" source="id" />
         <ReferenceField label="inclusions" source="sku.id" reference="Sku">
           <TextField source={SKU_TITLE_FIELD} />
@@ -26,9 +27,24 @@ export const SkuShow = (props: ShowProps): React.ReactElement => {
         <TextField label="skuName" source="skuName" />
         <TextField label="skuType" source="skuType" />
         <DateField source="updatedAt" label="Updated At" />
+        <ReferenceManyField
+          reference="SkuPackage"
+          target="SkuId"
+          label="SkuPackages"
+        >
+          <Datagrid rowClick="show">
+            <DateField source="createdAt" label="Created At" />
+            <TextField label="ID" source="id" />
+            <ReferenceField label="sku" source="sku.id" reference="Sku">
+              <TextField source={SKU_TITLE_FIELD} />
+            </ReferenceField>
+            <DateField source="updatedAt" label="Updated At" />
+          </Datagrid>
+        </ReferenceManyField>
         <ReferenceManyField reference="Sku" target="SkuId" label="Skus">
           <Datagrid rowClick="show">
             <DateField source="createdAt" label="Created At" />
+            <TextField label="fulfillmentInfo" source="fulfillmentInfo" />
             <TextField label="ID" source="id" />
             <ReferenceField label="inclusions" source="sku.id" reference="Sku">
               <TextField source={SKU_TITLE_FIELD} />

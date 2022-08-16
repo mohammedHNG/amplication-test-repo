@@ -13,7 +13,8 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
-import { IsOptional } from "class-validator";
+import { IsOptional, ValidateNested } from "class-validator";
+import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
 @InputType()
 class SkuPackageWhereInput {
   @ApiProperty({
@@ -26,5 +27,17 @@ class SkuPackageWhereInput {
     nullable: true,
   })
   id?: StringFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => SkuWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => SkuWhereUniqueInput)
+  @IsOptional()
+  @Field(() => SkuWhereUniqueInput, {
+    nullable: true,
+  })
+  sku?: SkuWhereUniqueInput;
 }
 export { SkuPackageWhereInput };
