@@ -25,8 +25,7 @@ import { DeleteSkuPackageArgs } from "./DeleteSkuPackageArgs";
 import { SkuPackageFindManyArgs } from "./SkuPackageFindManyArgs";
 import { SkuPackageFindUniqueArgs } from "./SkuPackageFindUniqueArgs";
 import { SkuPackage } from "./SkuPackage";
-import { MapSkusToPackageFindManyArgs } from "../../mapSkusToPackage/base/MapSkusToPackageFindManyArgs";
-import { MapSkusToPackage } from "../../mapSkusToPackage/base/MapSkusToPackage";
+import { Sku } from "../../sku/base/Sku";
 import { SkuPackageService } from "../skuPackage.service";
 
 @graphql.Resolver(() => SkuPackage)
@@ -98,7 +97,21 @@ export class SkuPackageResolverBase {
   ): Promise<SkuPackage> {
     return await this.service.create({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        inclusionSku: args.data.inclusionSku
+          ? {
+              connect: args.data.inclusionSku,
+            }
+          : undefined,
+
+        sku: args.data.sku
+          ? {
+              connect: args.data.sku,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -115,7 +128,21 @@ export class SkuPackageResolverBase {
     try {
       return await this.service.update({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          inclusionSku: args.data.inclusionSku
+            ? {
+                connect: args.data.inclusionSku,
+              }
+            : undefined,
+
+          sku: args.data.sku
+            ? {
+                connect: args.data.sku,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -149,22 +176,36 @@ export class SkuPackageResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [MapSkusToPackage])
+  @graphql.ResolveField(() => Sku, { nullable: true })
   @nestAccessControl.UseRoles({
-    resource: "MapSkusToPackage",
+    resource: "Sku",
     action: "read",
     possession: "any",
   })
-  async mapSkusToPackages(
-    @graphql.Parent() parent: SkuPackage,
-    @graphql.Args() args: MapSkusToPackageFindManyArgs
-  ): Promise<MapSkusToPackage[]> {
-    const results = await this.service.findMapSkusToPackages(parent.id, args);
+  async inclusionSku(
+    @graphql.Parent() parent: SkuPackage
+  ): Promise<Sku | null> {
+    const result = await this.service.getInclusionSku(parent.id);
 
-    if (!results) {
-      return [];
+    if (!result) {
+      return null;
     }
+    return result;
+  }
 
-    return results;
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Sku, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Sku",
+    action: "read",
+    possession: "any",
+  })
+  async sku(@graphql.Parent() parent: SkuPackage): Promise<Sku | null> {
+    const result = await this.service.getSku(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

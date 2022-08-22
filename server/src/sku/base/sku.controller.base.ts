@@ -27,9 +27,9 @@ import { SkuWhereUniqueInput } from "./SkuWhereUniqueInput";
 import { SkuFindManyArgs } from "./SkuFindManyArgs";
 import { SkuUpdateInput } from "./SkuUpdateInput";
 import { Sku } from "./Sku";
-import { MapSkusToPackageFindManyArgs } from "../../mapSkusToPackage/base/MapSkusToPackageFindManyArgs";
-import { MapSkusToPackage } from "../../mapSkusToPackage/base/MapSkusToPackage";
-import { MapSkusToPackageWhereUniqueInput } from "../../mapSkusToPackage/base/MapSkusToPackageWhereUniqueInput";
+import { SkuPackageFindManyArgs } from "../../skuPackage/base/SkuPackageFindManyArgs";
+import { SkuPackage } from "../../skuPackage/base/SkuPackage";
+import { SkuPackageWhereUniqueInput } from "../../skuPackage/base/SkuPackageWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class SkuControllerBase {
@@ -294,30 +294,32 @@ export class SkuControllerBase {
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
   @nestAccessControl.UseRoles({
-    resource: "MapSkusToPackage",
+    resource: "SkuPackage",
     action: "read",
     possession: "any",
   })
-  @common.Get("/:id/mapSkusToPackages")
-  @ApiNestedQuery(MapSkusToPackageFindManyArgs)
-  async findManyMapSkusToPackages(
+  @common.Get("/:id/inclusionSku")
+  @ApiNestedQuery(SkuPackageFindManyArgs)
+  async findManyInclusionSku(
     @common.Req() request: Request,
     @common.Param() params: SkuWhereUniqueInput
-  ): Promise<MapSkusToPackage[]> {
-    const query = plainToClass(MapSkusToPackageFindManyArgs, request.query);
-    const results = await this.service.findMapSkusToPackages(params.id, {
+  ): Promise<SkuPackage[]> {
+    const query = plainToClass(SkuPackageFindManyArgs, request.query);
+    const results = await this.service.findInclusionSku(params.id, {
       ...query,
       select: {
         createdAt: true,
         id: true,
 
-        packageId: {
+        inclusionSku: {
           select: {
             id: true,
           },
         },
 
-        skuId: {
+        inclusionSkuPrice: true,
+
+        sku: {
           select: {
             id: true,
           },
@@ -339,13 +341,13 @@ export class SkuControllerBase {
     action: "update",
     possession: "any",
   })
-  @common.Post("/:id/mapSkusToPackages")
-  async connectMapSkusToPackages(
+  @common.Post("/:id/inclusionSku")
+  async connectInclusionSku(
     @common.Param() params: SkuWhereUniqueInput,
-    @common.Body() body: MapSkusToPackageWhereUniqueInput[]
+    @common.Body() body: SkuPackageWhereUniqueInput[]
   ): Promise<void> {
     const data = {
-      mapSkusToPackages: {
+      inclusionSku: {
         connect: body,
       },
     };
@@ -361,13 +363,13 @@ export class SkuControllerBase {
     action: "update",
     possession: "any",
   })
-  @common.Patch("/:id/mapSkusToPackages")
-  async updateMapSkusToPackages(
+  @common.Patch("/:id/inclusionSku")
+  async updateInclusionSku(
     @common.Param() params: SkuWhereUniqueInput,
-    @common.Body() body: MapSkusToPackageWhereUniqueInput[]
+    @common.Body() body: SkuPackageWhereUniqueInput[]
   ): Promise<void> {
     const data = {
-      mapSkusToPackages: {
+      inclusionSku: {
         set: body,
       },
     };
@@ -383,13 +385,123 @@ export class SkuControllerBase {
     action: "update",
     possession: "any",
   })
-  @common.Delete("/:id/mapSkusToPackages")
-  async disconnectMapSkusToPackages(
+  @common.Delete("/:id/inclusionSku")
+  async disconnectInclusionSku(
     @common.Param() params: SkuWhereUniqueInput,
-    @common.Body() body: MapSkusToPackageWhereUniqueInput[]
+    @common.Body() body: SkuPackageWhereUniqueInput[]
   ): Promise<void> {
     const data = {
-      mapSkusToPackages: {
+      inclusionSku: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @nestAccessControl.UseRoles({
+    resource: "SkuPackage",
+    action: "read",
+    possession: "any",
+  })
+  @common.Get("/:id/skuPackages")
+  @ApiNestedQuery(SkuPackageFindManyArgs)
+  async findManySkuPackages(
+    @common.Req() request: Request,
+    @common.Param() params: SkuWhereUniqueInput
+  ): Promise<SkuPackage[]> {
+    const query = plainToClass(SkuPackageFindManyArgs, request.query);
+    const results = await this.service.findSkuPackages(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        id: true,
+
+        inclusionSku: {
+          select: {
+            id: true,
+          },
+        },
+
+        inclusionSkuPrice: true,
+
+        sku: {
+          select: {
+            id: true,
+          },
+        },
+
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Sku",
+    action: "update",
+    possession: "any",
+  })
+  @common.Post("/:id/skuPackages")
+  async connectSkuPackages(
+    @common.Param() params: SkuWhereUniqueInput,
+    @common.Body() body: SkuPackageWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      skuPackages: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Sku",
+    action: "update",
+    possession: "any",
+  })
+  @common.Patch("/:id/skuPackages")
+  async updateSkuPackages(
+    @common.Param() params: SkuWhereUniqueInput,
+    @common.Body() body: SkuPackageWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      skuPackages: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @nestAccessControl.UseRoles({
+    resource: "Sku",
+    action: "update",
+    possession: "any",
+  })
+  @common.Delete("/:id/skuPackages")
+  async disconnectSkuPackages(
+    @common.Param() params: SkuWhereUniqueInput,
+    @common.Body() body: SkuPackageWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      skuPackages: {
         disconnect: body,
       },
     };

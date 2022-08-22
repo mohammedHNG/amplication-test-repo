@@ -1,10 +1,10 @@
-import { MapSkusToPackage } from "../mapSkusToPackage/MapSkusToPackage";
+import { Sku } from "../sku/Sku";
 
 export type SkuPackage = {
   createdAt: Date;
   id: string;
-  mapSkusToPackages?: Array<MapSkusToPackage>;
-  packageName: string | null;
-  packagePrice: number | null;
+  inclusionSku?: Sku | null;
+  inclusionSkuPrice: number | null;
+  sku?: Sku | null;
   updatedAt: Date;
 };

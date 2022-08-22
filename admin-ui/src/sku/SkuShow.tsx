@@ -11,7 +11,6 @@ import {
   Datagrid,
 } from "react-admin";
 
-import { SKUPACKAGE_TITLE_FIELD } from "../skuPackage/SkuPackageTitle";
 import { SKU_TITLE_FIELD } from "./SkuTitle";
 import { SKUGROUP_TITLE_FIELD } from "../skuGroup/SkuGroupTitle";
 import { SKUSUBGROUP_TITLE_FIELD } from "../skuSubGroup/SkuSubGroupTitle";
@@ -42,20 +41,43 @@ export const SkuShow = (props: ShowProps): React.ReactElement => {
         <TextField label="Sku Type" source="skuType" />
         <DateField source="updatedAt" label="Updated At" />
         <ReferenceManyField
-          reference="MapSkusToPackage"
+          reference="SkuPackage"
           target="SkuId"
-          label="Map Skus To Packages"
+          label="Sku Packages"
         >
           <Datagrid rowClick="show">
             <DateField source="createdAt" label="Created At" />
             <TextField label="ID" source="id" />
             <ReferenceField
-              label="Package"
-              source="skupackage.id"
-              reference="SkuPackage"
+              label="Inclusion Sku"
+              source="sku.id"
+              reference="Sku"
             >
-              <TextField source={SKUPACKAGE_TITLE_FIELD} />
+              <TextField source={SKU_TITLE_FIELD} />
             </ReferenceField>
+            <TextField label="Inclusion Sku Price" source="inclusionSkuPrice" />
+            <ReferenceField label="Sku" source="sku.id" reference="Sku">
+              <TextField source={SKU_TITLE_FIELD} />
+            </ReferenceField>
+            <DateField source="updatedAt" label="Updated At" />
+          </Datagrid>
+        </ReferenceManyField>
+        <ReferenceManyField
+          reference="SkuPackage"
+          target="SkuId"
+          label="Sku Packages"
+        >
+          <Datagrid rowClick="show">
+            <DateField source="createdAt" label="Created At" />
+            <TextField label="ID" source="id" />
+            <ReferenceField
+              label="Inclusion Sku"
+              source="sku.id"
+              reference="Sku"
+            >
+              <TextField source={SKU_TITLE_FIELD} />
+            </ReferenceField>
+            <TextField label="Inclusion Sku Price" source="inclusionSkuPrice" />
             <ReferenceField label="Sku" source="sku.id" reference="Sku">
               <TextField source={SKU_TITLE_FIELD} />
             </ReferenceField>

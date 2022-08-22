@@ -19,7 +19,7 @@ import {
   IsNumber,
 } from "class-validator";
 import { Type } from "class-transformer";
-import { MapSkusToPackage } from "../../mapSkusToPackage/base/MapSkusToPackage";
+import { Sku } from "../../sku/base/Sku";
 @ObjectType()
 class SkuPackage {
   @ApiProperty({
@@ -40,23 +40,12 @@ class SkuPackage {
 
   @ApiProperty({
     required: false,
-    type: () => [MapSkusToPackage],
+    type: () => Sku,
   })
   @ValidateNested()
-  @Type(() => MapSkusToPackage)
+  @Type(() => Sku)
   @IsOptional()
-  mapSkusToPackages?: Array<MapSkusToPackage>;
-
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  packageName!: string | null;
+  inclusionSku?: Sku | null;
 
   @ApiProperty({
     required: false,
@@ -67,7 +56,16 @@ class SkuPackage {
   @Field(() => Number, {
     nullable: true,
   })
-  packagePrice!: number | null;
+  inclusionSkuPrice!: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => Sku,
+  })
+  @ValidateNested()
+  @Type(() => Sku)
+  @IsOptional()
+  sku?: Sku | null;
 
   @ApiProperty({
     required: true,

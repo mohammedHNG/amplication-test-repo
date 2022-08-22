@@ -22,7 +22,7 @@ import {
 import { Type } from "class-transformer";
 import { GraphQLJSONObject } from "graphql-type-json";
 import { JsonValue } from "type-fest";
-import { MapSkusToPackage } from "../../mapSkusToPackage/base/MapSkusToPackage";
+import { SkuPackage } from "../../skuPackage/base/SkuPackage";
 import { SkuGroup } from "../../skuGroup/base/SkuGroup";
 import { SkuSubGroup } from "../../skuSubGroup/base/SkuSubGroup";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
@@ -56,12 +56,12 @@ class Sku {
 
   @ApiProperty({
     required: false,
-    type: () => [MapSkusToPackage],
+    type: () => [SkuPackage],
   })
   @ValidateNested()
-  @Type(() => MapSkusToPackage)
+  @Type(() => SkuPackage)
   @IsOptional()
-  mapSkusToPackages?: Array<MapSkusToPackage>;
+  inclusionSku?: Array<SkuPackage>;
 
   @ApiProperty({
     required: false,
@@ -93,6 +93,15 @@ class Sku {
     nullable: true,
   })
   skuName!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [SkuPackage],
+  })
+  @ValidateNested()
+  @Type(() => SkuPackage)
+  @IsOptional()
+  skuPackages?: Array<SkuPackage>;
 
   @ApiProperty({
     required: false,
