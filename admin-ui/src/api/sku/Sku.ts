@@ -1,13 +1,12 @@
 import { JsonValue } from "type-fest";
-import { SkuPackage } from "../skuPackage/SkuPackage";
 import { SkuGroup } from "../skuGroup/SkuGroup";
+import { SkuPackage } from "../skuPackage/SkuPackage";
 import { SkuSubGroup } from "../skuSubGroup/SkuSubGroup";
 
 export type Sku = {
   createdAt: Date;
   fulfillmentInfo: JsonValue;
   id: string;
-  inclusionSku?: Array<SkuPackage>;
   skuDescription: string | null;
   skuGroupId?: SkuGroup | null;
   skuName: string | null;

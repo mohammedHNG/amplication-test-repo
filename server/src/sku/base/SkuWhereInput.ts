@@ -15,9 +15,10 @@ import { JsonFilter } from "../../util/JsonFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested, IsEnum } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
-import { SkuPackageListRelationFilter } from "../../skuPackage/base/SkuPackageListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { SkuGroupWhereUniqueInput } from "../../skuGroup/base/SkuGroupWhereUniqueInput";
+import { SkuPackageListRelationFilter } from "../../skuPackage/base/SkuPackageListRelationFilter";
+import { SkuSubGroupWhereUniqueInput } from "../../skuSubGroup/base/SkuSubGroupWhereUniqueInput";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @InputType()
 class SkuWhereInput {
@@ -42,18 +43,6 @@ class SkuWhereInput {
     nullable: true,
   })
   id?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => SkuPackageListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => SkuPackageListRelationFilter)
-  @IsOptional()
-  @Field(() => SkuPackageListRelationFilter, {
-    nullable: true,
-  })
-  inclusionSku?: SkuPackageListRelationFilter;
 
   @ApiProperty({
     required: false,
@@ -100,6 +89,18 @@ class SkuWhereInput {
     nullable: true,
   })
   skuPackages?: SkuPackageListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => SkuSubGroupWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => SkuSubGroupWhereUniqueInput)
+  @IsOptional()
+  @Field(() => SkuSubGroupWhereUniqueInput, {
+    nullable: true,
+  })
+  skuSubGroupId?: SkuSubGroupWhereUniqueInput;
 
   @ApiProperty({
     required: false,

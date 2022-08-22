@@ -22,8 +22,8 @@ import {
 import { Type } from "class-transformer";
 import { GraphQLJSONObject } from "graphql-type-json";
 import { JsonValue } from "type-fest";
-import { SkuPackage } from "../../skuPackage/base/SkuPackage";
 import { SkuGroup } from "../../skuGroup/base/SkuGroup";
+import { SkuPackage } from "../../skuPackage/base/SkuPackage";
 import { SkuSubGroup } from "../../skuSubGroup/base/SkuSubGroup";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @ObjectType()
@@ -53,15 +53,6 @@ class Sku {
   @IsString()
   @Field(() => String)
   id!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => [SkuPackage],
-  })
-  @ValidateNested()
-  @Type(() => SkuPackage)
-  @IsOptional()
-  inclusionSku?: Array<SkuPackage>;
 
   @ApiProperty({
     required: false,
