@@ -1,7 +1,7 @@
-import { MapSkusToPackageUpdateManyWithoutSkuPackagesInput } from "./MapSkusToPackageUpdateManyWithoutSkuPackagesInput";
+import { SkuWhereUniqueInput } from "../sku/SkuWhereUniqueInput";
 
 export type SkuPackageUpdateInput = {
-  mapSkusToPackages?: MapSkusToPackageUpdateManyWithoutSkuPackagesInput;
-  packageName?: string | null;
-  packagePrice?: number | null;
+  inclusionSku?: SkuWhereUniqueInput | null;
+  inclusionSkuPrice?: number | null;
+  sku?: SkuWhereUniqueInput | null;
 };

@@ -11,38 +11,22 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput } from "./MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput";
-import {
-  ValidateNested,
-  IsOptional,
-  IsString,
-  IsNumber,
-} from "class-validator";
+import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
+import { ValidateNested, IsOptional, IsNumber } from "class-validator";
 import { Type } from "class-transformer";
 @InputType()
 class SkuPackageCreateInput {
   @ApiProperty({
     required: false,
-    type: () => MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput,
+    type: () => SkuWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput)
+  @Type(() => SkuWhereUniqueInput)
   @IsOptional()
-  @Field(() => MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput, {
+  @Field(() => SkuWhereUniqueInput, {
     nullable: true,
   })
-  mapSkusToPackages?: MapSkusToPackageCreateNestedManyWithoutSkuPackagesInput;
-
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  packageName?: string | null;
+  inclusionSku?: SkuWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,
@@ -53,6 +37,18 @@ class SkuPackageCreateInput {
   @Field(() => Number, {
     nullable: true,
   })
-  packagePrice?: number | null;
+  inclusionSkuPrice?: number | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => SkuWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => SkuWhereUniqueInput)
+  @IsOptional()
+  @Field(() => SkuWhereUniqueInput, {
+    nullable: true,
+  })
+  sku?: SkuWhereUniqueInput | null;
 }
 export { SkuPackageCreateInput };

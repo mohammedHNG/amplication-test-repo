@@ -27,9 +27,6 @@ import { SkuPackageWhereUniqueInput } from "./SkuPackageWhereUniqueInput";
 import { SkuPackageFindManyArgs } from "./SkuPackageFindManyArgs";
 import { SkuPackageUpdateInput } from "./SkuPackageUpdateInput";
 import { SkuPackage } from "./SkuPackage";
-import { MapSkusToPackageFindManyArgs } from "../../mapSkusToPackage/base/MapSkusToPackageFindManyArgs";
-import { MapSkusToPackage } from "../../mapSkusToPackage/base/MapSkusToPackage";
-import { MapSkusToPackageWhereUniqueInput } from "../../mapSkusToPackage/base/MapSkusToPackageWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class SkuPackageControllerBase {
@@ -51,12 +48,39 @@ export class SkuPackageControllerBase {
     @common.Body() data: SkuPackageCreateInput
   ): Promise<SkuPackage> {
     return await this.service.create({
-      data: data,
+      data: {
+        ...data,
+
+        inclusionSku: data.inclusionSku
+          ? {
+              connect: data.inclusionSku,
+            }
+          : undefined,
+
+        sku: data.sku
+          ? {
+              connect: data.sku,
+            }
+          : undefined,
+      },
       select: {
         createdAt: true,
         id: true,
-        packageName: true,
-        packagePrice: true,
+
+        inclusionSku: {
+          select: {
+            id: true,
+          },
+        },
+
+        inclusionSkuPrice: true,
+
+        sku: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -79,8 +103,21 @@ export class SkuPackageControllerBase {
       select: {
         createdAt: true,
         id: true,
-        packageName: true,
-        packagePrice: true,
+
+        inclusionSku: {
+          select: {
+            id: true,
+          },
+        },
+
+        inclusionSkuPrice: true,
+
+        sku: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -104,8 +141,21 @@ export class SkuPackageControllerBase {
       select: {
         createdAt: true,
         id: true,
-        packageName: true,
-        packagePrice: true,
+
+        inclusionSku: {
+          select: {
+            id: true,
+          },
+        },
+
+        inclusionSkuPrice: true,
+
+        sku: {
+          select: {
+            id: true,
+          },
+        },
+
         updatedAt: true,
       },
     });
@@ -134,12 +184,39 @@ export class SkuPackageControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          inclusionSku: data.inclusionSku
+            ? {
+                connect: data.inclusionSku,
+              }
+            : undefined,
+
+          sku: data.sku
+            ? {
+                connect: data.sku,
+              }
+            : undefined,
+        },
         select: {
           createdAt: true,
           id: true,
-          packageName: true,
-          packagePrice: true,
+
+          inclusionSku: {
+            select: {
+              id: true,
+            },
+          },
+
+          inclusionSkuPrice: true,
+
+          sku: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
         },
       });
@@ -171,8 +248,21 @@ export class SkuPackageControllerBase {
         select: {
           createdAt: true,
           id: true,
-          packageName: true,
-          packagePrice: true,
+
+          inclusionSku: {
+            select: {
+              id: true,
+            },
+          },
+
+          inclusionSkuPrice: true,
+
+          sku: {
+            select: {
+              id: true,
+            },
+          },
+
           updatedAt: true,
         },
       });
@@ -184,113 +274,5 @@ export class SkuPackageControllerBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "MapSkusToPackage",
-    action: "read",
-    possession: "any",
-  })
-  @common.Get("/:id/mapSkusToPackages")
-  @ApiNestedQuery(MapSkusToPackageFindManyArgs)
-  async findManyMapSkusToPackages(
-    @common.Req() request: Request,
-    @common.Param() params: SkuPackageWhereUniqueInput
-  ): Promise<MapSkusToPackage[]> {
-    const query = plainToClass(MapSkusToPackageFindManyArgs, request.query);
-    const results = await this.service.findMapSkusToPackages(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-        id: true,
-
-        packageId: {
-          select: {
-            id: true,
-          },
-        },
-
-        skuId: {
-          select: {
-            id: true,
-          },
-        },
-
-        updatedAt: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "SkuPackage",
-    action: "update",
-    possession: "any",
-  })
-  @common.Post("/:id/mapSkusToPackages")
-  async connectMapSkusToPackages(
-    @common.Param() params: SkuPackageWhereUniqueInput,
-    @common.Body() body: MapSkusToPackageWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      mapSkusToPackages: {
-        connect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "SkuPackage",
-    action: "update",
-    possession: "any",
-  })
-  @common.Patch("/:id/mapSkusToPackages")
-  async updateMapSkusToPackages(
-    @common.Param() params: SkuPackageWhereUniqueInput,
-    @common.Body() body: MapSkusToPackageWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      mapSkusToPackages: {
-        set: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "SkuPackage",
-    action: "update",
-    possession: "any",
-  })
-  @common.Delete("/:id/mapSkusToPackages")
-  async disconnectMapSkusToPackages(
-    @common.Param() params: SkuPackageWhereUniqueInput,
-    @common.Body() body: MapSkusToPackageWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      mapSkusToPackages: {
-        disconnect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
   }
 }

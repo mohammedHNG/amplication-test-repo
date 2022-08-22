@@ -11,7 +11,7 @@ import {
   SelectInput,
 } from "react-admin";
 
-import { MapSkusToPackageTitle } from "../mapSkusToPackage/MapSkusToPackageTitle";
+import { SkuPackageTitle } from "../skuPackage/SkuPackageTitle";
 import { SkuGroupTitle } from "../skuGroup/SkuGroupTitle";
 import { SkuSubGroupTitle } from "../skuSubGroup/SkuSubGroupTitle";
 
@@ -21,12 +21,12 @@ export const SkuEdit = (props: EditProps): React.ReactElement => {
       <SimpleForm>
         <div />
         <ReferenceArrayInput
-          source="mapSkusToPackages"
-          reference="MapSkusToPackage"
+          source="inclusionSku"
+          reference="SkuPackage"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}
         >
-          <SelectArrayInput optionText={MapSkusToPackageTitle} />
+          <SelectArrayInput optionText={SkuPackageTitle} />
         </ReferenceArrayInput>
         <TextInput label="Sku Description" multiline source="skuDescription" />
         <ReferenceInput
@@ -37,6 +37,14 @@ export const SkuEdit = (props: EditProps): React.ReactElement => {
           <SelectInput optionText={SkuGroupTitle} />
         </ReferenceInput>
         <TextInput label="Sku Name" source="skuName" />
+        <ReferenceArrayInput
+          source="skuPackages"
+          reference="SkuPackage"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={SkuPackageTitle} />
+        </ReferenceArrayInput>
         <ReferenceInput
           source="skusubgroup.id"
           reference="SkuSubGroup"

@@ -1,15 +1,16 @@
 import { JsonFilter } from "../../util/JsonFilter";
 import { StringFilter } from "../../util/StringFilter";
-import { MapSkusToPackageListRelationFilter } from "../mapSkusToPackage/MapSkusToPackageListRelationFilter";
+import { SkuPackageListRelationFilter } from "../skuPackage/SkuPackageListRelationFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { SkuGroupWhereUniqueInput } from "../skuGroup/SkuGroupWhereUniqueInput";
 
 export type SkuWhereInput = {
   fulfillmentInfo?: JsonFilter;
   id?: StringFilter;
-  mapSkusToPackages?: MapSkusToPackageListRelationFilter;
+  inclusionSku?: SkuPackageListRelationFilter;
   skuDescription?: StringNullableFilter;
   skuGroupId?: SkuGroupWhereUniqueInput;
   skuName?: StringNullableFilter;
+  skuPackages?: SkuPackageListRelationFilter;
   skuType?: "Item" | "Package";
 };

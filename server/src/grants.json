@@ -148,35 +148,5 @@
     "resource": "SkuPackage",
     "action": "read:any",
     "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "MapSkusToPackage",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "MapSkusToPackage",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "MapSkusToPackage",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "MapSkusToPackage",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "MapSkusToPackage",
-    "action": "read:any",
-    "attributes": "*"
   }
 ]

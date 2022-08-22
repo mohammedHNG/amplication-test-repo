@@ -14,8 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { MapSkusToPackageListRelationFilter } from "../../mapSkusToPackage/base/MapSkusToPackageListRelationFilter";
-import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
 import { FloatNullableFilter } from "../../util/FloatNullableFilter";
 @InputType()
 class SkuPackageWhereInput {
@@ -32,26 +31,15 @@ class SkuPackageWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => MapSkusToPackageListRelationFilter,
+    type: () => SkuWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => MapSkusToPackageListRelationFilter)
+  @Type(() => SkuWhereUniqueInput)
   @IsOptional()
-  @Field(() => MapSkusToPackageListRelationFilter, {
+  @Field(() => SkuWhereUniqueInput, {
     nullable: true,
   })
-  mapSkusToPackages?: MapSkusToPackageListRelationFilter;
-
-  @ApiProperty({
-    required: false,
-    type: StringNullableFilter,
-  })
-  @Type(() => StringNullableFilter)
-  @IsOptional()
-  @Field(() => StringNullableFilter, {
-    nullable: true,
-  })
-  packageName?: StringNullableFilter;
+  inclusionSku?: SkuWhereUniqueInput;
 
   @ApiProperty({
     required: false,
@@ -62,6 +50,18 @@ class SkuPackageWhereInput {
   @Field(() => FloatNullableFilter, {
     nullable: true,
   })
-  packagePrice?: FloatNullableFilter;
+  inclusionSkuPrice?: FloatNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => SkuWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => SkuWhereUniqueInput)
+  @IsOptional()
+  @Field(() => SkuWhereUniqueInput, {
+    nullable: true,
+  })
+  sku?: SkuWhereUniqueInput;
 }
 export { SkuPackageWhereInput };

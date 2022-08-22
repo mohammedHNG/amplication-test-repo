@@ -25,10 +25,6 @@ import { SkuPackageList } from "./skuPackage/SkuPackageList";
 import { SkuPackageCreate } from "./skuPackage/SkuPackageCreate";
 import { SkuPackageEdit } from "./skuPackage/SkuPackageEdit";
 import { SkuPackageShow } from "./skuPackage/SkuPackageShow";
-import { MapSkusToPackageList } from "./mapSkusToPackage/MapSkusToPackageList";
-import { MapSkusToPackageCreate } from "./mapSkusToPackage/MapSkusToPackageCreate";
-import { MapSkusToPackageEdit } from "./mapSkusToPackage/MapSkusToPackageEdit";
-import { MapSkusToPackageShow } from "./mapSkusToPackage/MapSkusToPackageShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -89,13 +85,6 @@ const App = (): React.ReactElement => {
           edit={SkuPackageEdit}
           create={SkuPackageCreate}
           show={SkuPackageShow}
-        />
-        <Resource
-          name="MapSkusToPackage"
-          list={MapSkusToPackageList}
-          edit={MapSkusToPackageEdit}
-          create={MapSkusToPackageCreate}
-          show={MapSkusToPackageShow}
         />
       </Admin>
     </div>

@@ -20,18 +20,19 @@ model User {
 }
 
 model Sku {
-  createdAt         DateTime           @default(now())
-  fulfillmentInfo   Json?
-  id                String             @id @default(cuid())
-  mapSkusToPackages MapSkusToPackage[]
-  skuDescription    String?
-  skuGroupId        SkuGroup?          @relation(fields: [skuGroupIdId], references: [id])
-  skuGroupIdId      String?
-  skuName           String?
-  skuSubGroupId     SkuSubGroup?       @relation(fields: [skuSubGroupIdId], references: [id])
-  skuSubGroupIdId   String?
-  skuType           EnumSkuSkuType?
-  updatedAt         DateTime           @updatedAt
+  createdAt       DateTime        @default(now())
+  fulfillmentInfo Json?
+  id              String          @id @default(cuid())
+  inclusionSku    SkuPackage[]    @relation(name: "SkuInclusionSkuSkuPackageInclusionSku")
+  skuDescription  String?
+  skuGroupId      SkuGroup?       @relation(fields: [skuGroupIdId], references: [id])
+  skuGroupIdId    String?
+  skuName         String?
+  skuPackages     SkuPackage[]    @relation(name: "SkuOnSkuPackages")
+  skuSubGroupId   SkuSubGroup?    @relation(fields: [skuSubGroupIdId], references: [id])
+  skuSubGroupIdId String?
+  skuType         EnumSkuSkuType?
+  updatedAt       DateTime        @updatedAt
 }
 
 model SkuGroup {
@@ -54,22 +55,14 @@ model SkuSubGroup {
 }
 
 model SkuPackage {
-  createdAt         DateTime           @default(now())
-  id                String             @id @default(cuid())
-  mapSkusToPackages MapSkusToPackage[]
-  packageName       String?
-  packagePrice      Float?
-  updatedAt         DateTime           @updatedAt
-}
-
-model MapSkusToPackage {
-  createdAt   DateTime    @default(now())
-  id          String      @id @default(cuid())
-  packageId   SkuPackage? @relation(fields: [packageIdId], references: [id])
-  packageIdId String?
-  skuId       Sku?        @relation(fields: [skuIdId], references: [id])
-  skuIdId     String?
-  updatedAt   DateTime    @updatedAt
+  createdAt         DateTime @default(now())
+  id                String   @id @default(cuid())
+  inclusionSku      Sku?     @relation(name: "SkuInclusionSkuSkuPackageInclusionSku", fields: [inclusionSkuId], references: [id])
+  inclusionSkuId    String?
+  inclusionSkuPrice Float?
+  sku               Sku?     @relation(name: "SkuOnSkuPackages", fields: [skuId], references: [id])
+  skuId             String?
+  updatedAt         DateTime @updatedAt
 }
 
 enum EnumSkuSkuType {

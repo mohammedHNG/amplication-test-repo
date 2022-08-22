@@ -6,7 +6,6 @@ import { SkuModule } from "./sku/sku.module";
 import { SkuGroupModule } from "./skuGroup/skuGroup.module";
 import { SkuSubGroupModule } from "./skuSubGroup/skuSubGroup.module";
 import { SkuPackageModule } from "./skuPackage/skuPackage.module";
-import { MapSkusToPackageModule } from "./mapSkusToPackage/mapSkusToPackage.module";
 import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
 import { HealthModule } from "./health/health.module";
@@ -24,7 +23,6 @@ import { GraphQLModule } from "@nestjs/graphql";
     SkuGroupModule,
     SkuSubGroupModule,
     SkuPackageModule,
-    MapSkusToPackageModule,
     ACLModule,
     AuthModule,
     HealthModule,
