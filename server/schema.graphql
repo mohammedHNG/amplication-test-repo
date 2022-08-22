@@ -17,6 +17,17 @@ enum EnumSkuSkuType {
   Package
 }
 
+input FloatNullableFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: Float
+  notIn: [Float!]
+}
+
 """
 The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -33,24 +44,36 @@ type MetaQueryPayload {
 
 type Mutation {
   createSku(data: SkuCreateInput!): Sku!
+  createSkuGroup(data: SkuGroupCreateInput!): SkuGroup!
   createSkuPackage(data: SkuPackageCreateInput!): SkuPackage!
+  createSkuSubGroupId(data: SkuSubGroupIdCreateInput!): SkuSubGroupId!
   createUser(data: UserCreateInput!): User!
   deleteSku(where: SkuWhereUniqueInput!): Sku!
+  deleteSkuGroup(where: SkuGroupWhereUniqueInput!): SkuGroup!
   deleteSkuPackage(where: SkuPackageWhereUniqueInput!): SkuPackage!
+  deleteSkuSubGroupId(where: SkuSubGroupIdWhereUniqueInput!): SkuSubGroupId!
   deleteUser(where: UserWhereUniqueInput!): User!
   login(credentials: Credentials!): UserInfo!
   updateSku(data: SkuUpdateInput!, where: SkuWhereUniqueInput!): Sku!
+  updateSkuGroup(data: SkuGroupUpdateInput!, where: SkuGroupWhereUniqueInput!): SkuGroup!
   updateSkuPackage(data: SkuPackageUpdateInput!, where: SkuPackageWhereUniqueInput!): SkuPackage!
+  updateSkuSubGroupId(data: SkuSubGroupIdUpdateInput!, where: SkuSubGroupIdWhereUniqueInput!): SkuSubGroupId!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
 }
 
 type Query {
+  _skuGroupsMeta(orderBy: [SkuGroupOrderByInput!], skip: Float, take: Float, where: SkuGroupWhereInput): MetaQueryPayload!
   _skuPackagesMeta(orderBy: [SkuPackageOrderByInput!], skip: Float, take: Float, where: SkuPackageWhereInput): MetaQueryPayload!
+  _skuSubGroupIdsMeta(orderBy: [SkuSubGroupIdOrderByInput!], skip: Float, take: Float, where: SkuSubGroupIdWhereInput): MetaQueryPayload!
   _skusMeta(orderBy: [SkuOrderByInput!], skip: Float, take: Float, where: SkuWhereInput): MetaQueryPayload!
   _usersMeta(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): MetaQueryPayload!
   sku(where: SkuWhereUniqueInput!): Sku
+  skuGroup(where: SkuGroupWhereUniqueInput!): SkuGroup
+  skuGroups(orderBy: [SkuGroupOrderByInput!], skip: Float, take: Float, where: SkuGroupWhereInput): [SkuGroup!]!
   skuPackage(where: SkuPackageWhereUniqueInput!): SkuPackage
   skuPackages(orderBy: [SkuPackageOrderByInput!], skip: Float, take: Float, where: SkuPackageWhereInput): [SkuPackage!]!
+  skuSubGroupId(where: SkuSubGroupIdWhereUniqueInput!): SkuSubGroupId
+  skuSubGroupIds(orderBy: [SkuSubGroupIdOrderByInput!], skip: Float, take: Float, where: SkuSubGroupIdWhereInput): [SkuSubGroupId!]!
   skus(orderBy: [SkuOrderByInput!], skip: Float, take: Float, where: SkuWhereInput): [Sku!]!
   user(where: UserWhereUniqueInput!): User
   userInfo: UserInfo!
@@ -66,27 +89,70 @@ type Sku {
   createdAt: DateTime!
   fulfillmentInfo: JSONObject
   id: String!
-  packages: SkuPackage
   skuDescription: String
-  skuId: String
+  skuGroupId: SkuGroup
   skuName: String
   skuPackages(orderBy: [SkuPackageOrderByInput!], skip: Float, take: Float, where: SkuPackageWhereInput): [SkuPackage!]!
+  skuSubGroupId: SkuSubGroupId
   skuType: EnumSkuSkuType
   updatedAt: DateTime!
 }
 
 input SkuCreateInput {
   fulfillmentInfo: JSONObject
-  packages: SkuPackageWhereUniqueInput
   skuDescription: String
-  skuId: String
+  skuGroupId: SkuGroupWhereUniqueInput
   skuName: String
   skuPackages: SkuPackageCreateNestedManyWithoutSkusInput
+  skuSubGroupId: SkuSubGroupIdWhereUniqueInput
   skuType: EnumSkuSkuType
 }
 
-input SkuCreateNestedManyWithoutSkuPackagesInput {
+input SkuCreateNestedManyWithoutSkuGroupsInput {
   connect: [SkuWhereUniqueInput!]
+}
+
+input SkuCreateNestedManyWithoutSkuSubGroupIdsInput {
+  connect: [SkuWhereUniqueInput!]
+}
+
+type SkuGroup {
+  createdAt: DateTime!
+  id: String!
+  skuGroupName: String
+  skuSubGroups(orderBy: [SkuSubGroupIdOrderByInput!], skip: Float, take: Float, where: SkuSubGroupIdWhereInput): [SkuSubGroupId!]!
+  skus(orderBy: [SkuOrderByInput!], skip: Float, take: Float, where: SkuWhereInput): [Sku!]!
+  updatedAt: DateTime!
+}
+
+input SkuGroupCreateInput {
+  skuGroupName: String
+  skuSubGroups: SkuSubGroupIdCreateNestedManyWithoutSkuGroupsInput
+  skus: SkuCreateNestedManyWithoutSkuGroupsInput
+}
+
+input SkuGroupOrderByInput {
+  createdAt: SortOrder
+  id: SortOrder
+  skuGroupName: SortOrder
+  updatedAt: SortOrder
+}
+
+input SkuGroupUpdateInput {
+  skuGroupName: String
+  skuSubGroups: SkuSubGroupIdUpdateManyWithoutSkuGroupsInput
+  skus: SkuUpdateManyWithoutSkuGroupsInput
+}
+
+input SkuGroupWhereInput {
+  id: StringFilter
+  skuGroupName: StringNullableFilter
+  skuSubGroups: SkuSubGroupIdListRelationFilter
+  skus: SkuListRelationFilter
+}
+
+input SkuGroupWhereUniqueInput {
+  id: String!
 }
 
 input SkuListRelationFilter {
@@ -99,10 +165,10 @@ input SkuOrderByInput {
   createdAt: SortOrder
   fulfillmentInfo: SortOrder
   id: SortOrder
-  packagesId: SortOrder
   skuDescription: SortOrder
-  skuId: SortOrder
+  skuGroupIdId: SortOrder
   skuName: SortOrder
+  skuSubGroupIdId: SortOrder
   skuType: SortOrder
   updatedAt: SortOrder
 }
@@ -110,14 +176,14 @@ input SkuOrderByInput {
 type SkuPackage {
   createdAt: DateTime!
   id: String!
+  inclusionSkuPrice: Float
   sku: Sku
-  skus(orderBy: [SkuOrderByInput!], skip: Float, take: Float, where: SkuWhereInput): [Sku!]!
   updatedAt: DateTime!
 }
 
 input SkuPackageCreateInput {
+  inclusionSkuPrice: Float
   sku: SkuWhereUniqueInput
-  skus: SkuCreateNestedManyWithoutSkuPackagesInput
 }
 
 input SkuPackageCreateNestedManyWithoutSkusInput {
@@ -133,13 +199,14 @@ input SkuPackageListRelationFilter {
 input SkuPackageOrderByInput {
   createdAt: SortOrder
   id: SortOrder
+  inclusionSkuPrice: SortOrder
   skuId: SortOrder
   updatedAt: SortOrder
 }
 
 input SkuPackageUpdateInput {
+  inclusionSkuPrice: Float
   sku: SkuWhereUniqueInput
-  skus: SkuUpdateManyWithoutSkuPackagesInput
 }
 
 input SkuPackageUpdateManyWithoutSkusInput {
@@ -150,25 +217,86 @@ input SkuPackageUpdateManyWithoutSkusInput {
 
 input SkuPackageWhereInput {
   id: StringFilter
+  inclusionSkuPrice: FloatNullableFilter
   sku: SkuWhereUniqueInput
-  skus: SkuListRelationFilter
 }
 
 input SkuPackageWhereUniqueInput {
   id: String!
 }
 
+type SkuSubGroupId {
+  createdAt: DateTime!
+  id: String!
+  skuGroupId: SkuGroup
+  skuSubGroupName: String
+  skus(orderBy: [SkuOrderByInput!], skip: Float, take: Float, where: SkuWhereInput): [Sku!]!
+  updatedAt: DateTime!
+}
+
+input SkuSubGroupIdCreateInput {
+  skuGroupId: SkuGroupWhereUniqueInput
+  skuSubGroupName: String
+  skus: SkuCreateNestedManyWithoutSkuSubGroupIdsInput
+}
+
+input SkuSubGroupIdCreateNestedManyWithoutSkuGroupsInput {
+  connect: [SkuSubGroupIdWhereUniqueInput!]
+}
+
+input SkuSubGroupIdListRelationFilter {
+  every: SkuSubGroupIdWhereInput
+  none: SkuSubGroupIdWhereInput
+  some: SkuSubGroupIdWhereInput
+}
+
+input SkuSubGroupIdOrderByInput {
+  createdAt: SortOrder
+  id: SortOrder
+  skuGroupIdId: SortOrder
+  skuSubGroupName: SortOrder
+  updatedAt: SortOrder
+}
+
+input SkuSubGroupIdUpdateInput {
+  skuGroupId: SkuGroupWhereUniqueInput
+  skuSubGroupName: String
+  skus: SkuUpdateManyWithoutSkuSubGroupIdsInput
+}
+
+input SkuSubGroupIdUpdateManyWithoutSkuGroupsInput {
+  connect: [SkuSubGroupIdWhereUniqueInput!]
+  disconnect: [SkuSubGroupIdWhereUniqueInput!]
+  set: [SkuSubGroupIdWhereUniqueInput!]
+}
+
+input SkuSubGroupIdWhereInput {
+  id: StringFilter
+  skuSubGroupName: StringNullableFilter
+  skus: SkuListRelationFilter
+}
+
+input SkuSubGroupIdWhereUniqueInput {
+  id: String!
+}
+
 input SkuUpdateInput {
   fulfillmentInfo: JSONObject
-  packages: SkuPackageWhereUniqueInput
   skuDescription: String
-  skuId: String
+  skuGroupId: SkuGroupWhereUniqueInput
   skuName: String
   skuPackages: SkuPackageUpdateManyWithoutSkusInput
+  skuSubGroupId: SkuSubGroupIdWhereUniqueInput
   skuType: EnumSkuSkuType
 }
 
-input SkuUpdateManyWithoutSkuPackagesInput {
+input SkuUpdateManyWithoutSkuGroupsInput {
+  connect: [SkuWhereUniqueInput!]
+  disconnect: [SkuWhereUniqueInput!]
+  set: [SkuWhereUniqueInput!]
+}
+
+input SkuUpdateManyWithoutSkuSubGroupIdsInput {
   connect: [SkuWhereUniqueInput!]
   disconnect: [SkuWhereUniqueInput!]
   set: [SkuWhereUniqueInput!]
@@ -177,11 +305,11 @@ input SkuUpdateManyWithoutSkuPackagesInput {
 input SkuWhereInput {
   fulfillmentInfo: JsonFilter
   id: StringFilter
-  packages: SkuPackageWhereUniqueInput
   skuDescription: StringNullableFilter
-  skuId: StringNullableFilter
+  skuGroupId: SkuGroupWhereUniqueInput
   skuName: StringNullableFilter
   skuPackages: SkuPackageListRelationFilter
+  skuSubGroupId: SkuSubGroupIdWhereUniqueInput
   skuType: EnumSkuSkuType
 }
 
