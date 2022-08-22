@@ -1,8 +1,8 @@
 import { SkuUpdateManyWithoutSkuGroupsInput } from "./SkuUpdateManyWithoutSkuGroupsInput";
-import { SkuSubGroupUpdateManyWithoutSkuGroupsInput } from "./SkuSubGroupUpdateManyWithoutSkuGroupsInput";
+import { SkuSubGroupIdUpdateManyWithoutSkuGroupsInput } from "./SkuSubGroupIdUpdateManyWithoutSkuGroupsInput";
 
 export type SkuGroupUpdateInput = {
   skuGroupName?: string | null;
   skus?: SkuUpdateManyWithoutSkuGroupsInput;
-  skuSubGroups?: SkuSubGroupUpdateManyWithoutSkuGroupsInput;
+  skuSubGroups?: SkuSubGroupIdUpdateManyWithoutSkuGroupsInput;
 };

@@ -12,7 +12,7 @@ import {
 } from "react-admin";
 
 import { SKUGROUP_TITLE_FIELD } from "./SkuGroupTitle";
-import { SKUSUBGROUP_TITLE_FIELD } from "../skuSubGroup/SkuSubGroupTitle";
+import { SKUSUBGROUPID_TITLE_FIELD } from "../skuSubGroupId/SkuSubGroupIdTitle";
 
 export const SkuGroupShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -38,17 +38,17 @@ export const SkuGroupShow = (props: ShowProps): React.ReactElement => {
             <TextField label="Sku Name" source="skuName" />
             <ReferenceField
               label="Sku Sub Group"
-              source="skusubgroup.id"
-              reference="SkuSubGroup"
+              source="skusubgroupid.id"
+              reference="SkuSubGroupId"
             >
-              <TextField source={SKUSUBGROUP_TITLE_FIELD} />
+              <TextField source={SKUSUBGROUPID_TITLE_FIELD} />
             </ReferenceField>
             <TextField label="Sku Type" source="skuType" />
             <DateField source="updatedAt" label="Updated At" />
           </Datagrid>
         </ReferenceManyField>
         <ReferenceManyField
-          reference="SkuSubGroup"
+          reference="SkuSubGroupId"
           target="SkuGroupId"
           label="sku sub groups"
         >

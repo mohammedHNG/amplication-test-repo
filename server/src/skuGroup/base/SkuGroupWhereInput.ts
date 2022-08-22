@@ -16,7 +16,7 @@ import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { SkuListRelationFilter } from "../../sku/base/SkuListRelationFilter";
-import { SkuSubGroupListRelationFilter } from "../../skuSubGroup/base/SkuSubGroupListRelationFilter";
+import { SkuSubGroupIdListRelationFilter } from "../../skuSubGroupId/base/SkuSubGroupIdListRelationFilter";
 @InputType()
 class SkuGroupWhereInput {
   @ApiProperty({
@@ -55,14 +55,14 @@ class SkuGroupWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => SkuSubGroupListRelationFilter,
+    type: () => SkuSubGroupIdListRelationFilter,
   })
   @ValidateNested()
-  @Type(() => SkuSubGroupListRelationFilter)
+  @Type(() => SkuSubGroupIdListRelationFilter)
   @IsOptional()
-  @Field(() => SkuSubGroupListRelationFilter, {
+  @Field(() => SkuSubGroupIdListRelationFilter, {
     nullable: true,
   })
-  skuSubGroups?: SkuSubGroupListRelationFilter;
+  skuSubGroups?: SkuSubGroupIdListRelationFilter;
 }
 export { SkuGroupWhereInput };

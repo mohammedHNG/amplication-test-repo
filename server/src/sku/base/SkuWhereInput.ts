@@ -18,7 +18,7 @@ import { StringFilter } from "../../util/StringFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { SkuGroupWhereUniqueInput } from "../../skuGroup/base/SkuGroupWhereUniqueInput";
 import { SkuPackageListRelationFilter } from "../../skuPackage/base/SkuPackageListRelationFilter";
-import { SkuSubGroupWhereUniqueInput } from "../../skuSubGroup/base/SkuSubGroupWhereUniqueInput";
+import { SkuSubGroupIdWhereUniqueInput } from "../../skuSubGroupId/base/SkuSubGroupIdWhereUniqueInput";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @InputType()
 class SkuWhereInput {
@@ -92,15 +92,15 @@ class SkuWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => SkuSubGroupWhereUniqueInput,
+    type: () => SkuSubGroupIdWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => SkuSubGroupWhereUniqueInput)
+  @Type(() => SkuSubGroupIdWhereUniqueInput)
   @IsOptional()
-  @Field(() => SkuSubGroupWhereUniqueInput, {
+  @Field(() => SkuSubGroupIdWhereUniqueInput, {
     nullable: true,
   })
-  skuSubGroupId?: SkuSubGroupWhereUniqueInput;
+  skuSubGroupId?: SkuSubGroupIdWhereUniqueInput;
 
   @ApiProperty({
     required: false,

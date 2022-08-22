@@ -28,22 +28,22 @@ model Sku {
   skuGroupIdId    String?
   skuName         String?
   skuPackages     SkuPackage[]
-  skuSubGroupId   SkuSubGroup?    @relation(fields: [skuSubGroupIdId], references: [id])
+  skuSubGroupId   SkuSubGroupId?  @relation(fields: [skuSubGroupIdId], references: [id])
   skuSubGroupIdId String?
   skuType         EnumSkuSkuType?
   updatedAt       DateTime        @updatedAt
 }
 
 model SkuGroup {
-  createdAt    DateTime      @default(now())
-  id           String        @id @default(cuid())
+  createdAt    DateTime        @default(now())
+  id           String          @id @default(cuid())
   skuGroupName String?
   skus         Sku[]
-  skuSubGroups SkuSubGroup[]
-  updatedAt    DateTime      @updatedAt
+  skuSubGroups SkuSubGroupId[]
+  updatedAt    DateTime        @updatedAt
 }
 
-model SkuSubGroup {
+model SkuSubGroupId {
   createdAt       DateTime  @default(now())
   id              String    @id @default(cuid())
   skuGroupId      SkuGroup? @relation(fields: [skuGroupIdId], references: [id])

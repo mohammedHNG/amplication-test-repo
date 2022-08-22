@@ -14,7 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested } from "class-validator";
 import { SkuUpdateManyWithoutSkuGroupsInput } from "./SkuUpdateManyWithoutSkuGroupsInput";
 import { Type } from "class-transformer";
-import { SkuSubGroupUpdateManyWithoutSkuGroupsInput } from "./SkuSubGroupUpdateManyWithoutSkuGroupsInput";
+import { SkuSubGroupIdUpdateManyWithoutSkuGroupsInput } from "./SkuSubGroupIdUpdateManyWithoutSkuGroupsInput";
 @InputType()
 class SkuGroupUpdateInput {
   @ApiProperty({
@@ -42,14 +42,14 @@ class SkuGroupUpdateInput {
 
   @ApiProperty({
     required: false,
-    type: () => SkuSubGroupUpdateManyWithoutSkuGroupsInput,
+    type: () => SkuSubGroupIdUpdateManyWithoutSkuGroupsInput,
   })
   @ValidateNested()
-  @Type(() => SkuSubGroupUpdateManyWithoutSkuGroupsInput)
+  @Type(() => SkuSubGroupIdUpdateManyWithoutSkuGroupsInput)
   @IsOptional()
-  @Field(() => SkuSubGroupUpdateManyWithoutSkuGroupsInput, {
+  @Field(() => SkuSubGroupIdUpdateManyWithoutSkuGroupsInput, {
     nullable: true,
   })
-  skuSubGroups?: SkuSubGroupUpdateManyWithoutSkuGroupsInput;
+  skuSubGroups?: SkuSubGroupIdUpdateManyWithoutSkuGroupsInput;
 }
 export { SkuGroupUpdateInput };

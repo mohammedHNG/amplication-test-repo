@@ -30,9 +30,9 @@ import { SkuGroup } from "./SkuGroup";
 import { SkuFindManyArgs } from "../../sku/base/SkuFindManyArgs";
 import { Sku } from "../../sku/base/Sku";
 import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
-import { SkuSubGroupFindManyArgs } from "../../skuSubGroup/base/SkuSubGroupFindManyArgs";
-import { SkuSubGroup } from "../../skuSubGroup/base/SkuSubGroup";
-import { SkuSubGroupWhereUniqueInput } from "../../skuSubGroup/base/SkuSubGroupWhereUniqueInput";
+import { SkuSubGroupIdFindManyArgs } from "../../skuSubGroupId/base/SkuSubGroupIdFindManyArgs";
+import { SkuSubGroupId } from "../../skuSubGroupId/base/SkuSubGroupId";
+import { SkuSubGroupIdWhereUniqueInput } from "../../skuSubGroupId/base/SkuSubGroupIdWhereUniqueInput";
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class SkuGroupControllerBase {
@@ -297,17 +297,17 @@ export class SkuGroupControllerBase {
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
   @nestAccessControl.UseRoles({
-    resource: "SkuSubGroup",
+    resource: "SkuSubGroupId",
     action: "read",
     possession: "any",
   })
   @common.Get("/:id/skuSubGroups")
-  @ApiNestedQuery(SkuSubGroupFindManyArgs)
+  @ApiNestedQuery(SkuSubGroupIdFindManyArgs)
   async findManySkuSubGroups(
     @common.Req() request: Request,
     @common.Param() params: SkuGroupWhereUniqueInput
-  ): Promise<SkuSubGroup[]> {
-    const query = plainToClass(SkuSubGroupFindManyArgs, request.query);
+  ): Promise<SkuSubGroupId[]> {
+    const query = plainToClass(SkuSubGroupIdFindManyArgs, request.query);
     const results = await this.service.findSkuSubGroups(params.id, {
       ...query,
       select: {
@@ -340,7 +340,7 @@ export class SkuGroupControllerBase {
   @common.Post("/:id/skuSubGroups")
   async connectSkuSubGroups(
     @common.Param() params: SkuGroupWhereUniqueInput,
-    @common.Body() body: SkuSubGroupWhereUniqueInput[]
+    @common.Body() body: SkuSubGroupIdWhereUniqueInput[]
   ): Promise<void> {
     const data = {
       skuSubGroups: {
@@ -362,7 +362,7 @@ export class SkuGroupControllerBase {
   @common.Patch("/:id/skuSubGroups")
   async updateSkuSubGroups(
     @common.Param() params: SkuGroupWhereUniqueInput,
-    @common.Body() body: SkuSubGroupWhereUniqueInput[]
+    @common.Body() body: SkuSubGroupIdWhereUniqueInput[]
   ): Promise<void> {
     const data = {
       skuSubGroups: {
@@ -384,7 +384,7 @@ export class SkuGroupControllerBase {
   @common.Delete("/:id/skuSubGroups")
   async disconnectSkuSubGroups(
     @common.Param() params: SkuGroupWhereUniqueInput,
-    @common.Body() body: SkuSubGroupWhereUniqueInput[]
+    @common.Body() body: SkuSubGroupIdWhereUniqueInput[]
   ): Promise<void> {
     const data = {
       skuSubGroups: {

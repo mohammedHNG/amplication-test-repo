@@ -14,7 +14,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsDate, IsString, IsOptional, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 import { Sku } from "../../sku/base/Sku";
-import { SkuSubGroup } from "../../skuSubGroup/base/SkuSubGroup";
+import { SkuSubGroupId } from "../../skuSubGroupId/base/SkuSubGroupId";
 @ObjectType()
 class SkuGroup {
   @ApiProperty({
@@ -55,12 +55,12 @@ class SkuGroup {
 
   @ApiProperty({
     required: false,
-    type: () => [SkuSubGroup],
+    type: () => [SkuSubGroupId],
   })
   @ValidateNested()
-  @Type(() => SkuSubGroup)
+  @Type(() => SkuSubGroupId)
   @IsOptional()
-  skuSubGroups?: Array<SkuSubGroup>;
+  skuSubGroups?: Array<SkuSubGroupId>;
 
   @ApiProperty({
     required: true,

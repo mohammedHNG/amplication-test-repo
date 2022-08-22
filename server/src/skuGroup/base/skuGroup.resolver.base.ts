@@ -27,8 +27,8 @@ import { SkuGroupFindUniqueArgs } from "./SkuGroupFindUniqueArgs";
 import { SkuGroup } from "./SkuGroup";
 import { SkuFindManyArgs } from "../../sku/base/SkuFindManyArgs";
 import { Sku } from "../../sku/base/Sku";
-import { SkuSubGroupFindManyArgs } from "../../skuSubGroup/base/SkuSubGroupFindManyArgs";
-import { SkuSubGroup } from "../../skuSubGroup/base/SkuSubGroup";
+import { SkuSubGroupIdFindManyArgs } from "../../skuSubGroupId/base/SkuSubGroupIdFindManyArgs";
+import { SkuSubGroupId } from "../../skuSubGroupId/base/SkuSubGroupId";
 import { SkuGroupService } from "../skuGroup.service";
 
 @graphql.Resolver(() => SkuGroup)
@@ -171,16 +171,16 @@ export class SkuGroupResolverBase {
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [SkuSubGroup])
+  @graphql.ResolveField(() => [SkuSubGroupId])
   @nestAccessControl.UseRoles({
-    resource: "SkuSubGroup",
+    resource: "SkuSubGroupId",
     action: "read",
     possession: "any",
   })
   async skuSubGroups(
     @graphql.Parent() parent: SkuGroup,
-    @graphql.Args() args: SkuSubGroupFindManyArgs
-  ): Promise<SkuSubGroup[]> {
+    @graphql.Args() args: SkuSubGroupIdFindManyArgs
+  ): Promise<SkuSubGroupId[]> {
     const results = await this.service.findSkuSubGroups(parent.id, args);
 
     if (!results) {

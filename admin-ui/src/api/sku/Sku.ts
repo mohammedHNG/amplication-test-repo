@@ -1,7 +1,7 @@
 import { JsonValue } from "type-fest";
 import { SkuGroup } from "../skuGroup/SkuGroup";
 import { SkuPackage } from "../skuPackage/SkuPackage";
-import { SkuSubGroup } from "../skuSubGroup/SkuSubGroup";
+import { SkuSubGroupId } from "../skuSubGroupId/SkuSubGroupId";
 
 export type Sku = {
   createdAt: Date;
@@ -11,7 +11,7 @@ export type Sku = {
   skuGroupId?: SkuGroup | null;
   skuName: string | null;
   skuPackages?: Array<SkuPackage>;
-  skuSubGroupId?: SkuSubGroup | null;
+  skuSubGroupId?: SkuSubGroupId | null;
   skuType?: "Item" | "Package" | null;
   updatedAt: Date;
 };

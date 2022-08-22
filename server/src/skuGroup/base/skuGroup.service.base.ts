@@ -10,7 +10,7 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, SkuGroup, Sku, SkuSubGroup } from "@prisma/client";
+import { Prisma, SkuGroup, Sku, SkuSubGroupId } from "@prisma/client";
 
 export class SkuGroupServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -60,8 +60,8 @@ export class SkuGroupServiceBase {
 
   async findSkuSubGroups(
     parentId: string,
-    args: Prisma.SkuSubGroupFindManyArgs
-  ): Promise<SkuSubGroup[]> {
+    args: Prisma.SkuSubGroupIdFindManyArgs
+  ): Promise<SkuSubGroupId[]> {
     return this.prisma.skuGroup
       .findUnique({
         where: { id: parentId },

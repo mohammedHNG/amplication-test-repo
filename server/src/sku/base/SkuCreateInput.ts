@@ -23,7 +23,7 @@ import { InputJsonValue } from "../../types";
 import { SkuGroupWhereUniqueInput } from "../../skuGroup/base/SkuGroupWhereUniqueInput";
 import { Type } from "class-transformer";
 import { SkuPackageCreateNestedManyWithoutSkusInput } from "./SkuPackageCreateNestedManyWithoutSkusInput";
-import { SkuSubGroupWhereUniqueInput } from "../../skuSubGroup/base/SkuSubGroupWhereUniqueInput";
+import { SkuSubGroupIdWhereUniqueInput } from "../../skuSubGroupId/base/SkuSubGroupIdWhereUniqueInput";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @InputType()
 class SkuCreateInput {
@@ -85,15 +85,15 @@ class SkuCreateInput {
 
   @ApiProperty({
     required: false,
-    type: () => SkuSubGroupWhereUniqueInput,
+    type: () => SkuSubGroupIdWhereUniqueInput,
   })
   @ValidateNested()
-  @Type(() => SkuSubGroupWhereUniqueInput)
+  @Type(() => SkuSubGroupIdWhereUniqueInput)
   @IsOptional()
-  @Field(() => SkuSubGroupWhereUniqueInput, {
+  @Field(() => SkuSubGroupIdWhereUniqueInput, {
     nullable: true,
   })
-  skuSubGroupId?: SkuSubGroupWhereUniqueInput | null;
+  skuSubGroupId?: SkuSubGroupIdWhereUniqueInput | null;
 
   @ApiProperty({
     required: false,

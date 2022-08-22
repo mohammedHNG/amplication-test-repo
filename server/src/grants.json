@@ -91,31 +91,31 @@
   },
   {
     "role": "user",
-    "resource": "SkuSubGroup",
+    "resource": "SkuSubGroupId",
     "action": "read:own",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "SkuSubGroup",
+    "resource": "SkuSubGroupId",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "SkuSubGroup",
+    "resource": "SkuSubGroupId",
     "action": "update:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "SkuSubGroup",
+    "resource": "SkuSubGroupId",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "SkuSubGroup",
+    "resource": "SkuSubGroupId",
     "action": "read:any",
     "attributes": "*"
   },

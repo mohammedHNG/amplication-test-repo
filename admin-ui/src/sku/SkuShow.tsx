@@ -13,7 +13,7 @@ import {
 
 import { SKU_TITLE_FIELD } from "./SkuTitle";
 import { SKUGROUP_TITLE_FIELD } from "../skuGroup/SkuGroupTitle";
-import { SKUSUBGROUP_TITLE_FIELD } from "../skuSubGroup/SkuSubGroupTitle";
+import { SKUSUBGROUPID_TITLE_FIELD } from "../skuSubGroupId/SkuSubGroupIdTitle";
 
 export const SkuShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -33,10 +33,10 @@ export const SkuShow = (props: ShowProps): React.ReactElement => {
         <TextField label="Sku Name" source="skuName" />
         <ReferenceField
           label="Sku Sub Group"
-          source="skusubgroup.id"
-          reference="SkuSubGroup"
+          source="skusubgroupid.id"
+          reference="SkuSubGroupId"
         >
-          <TextField source={SKUSUBGROUP_TITLE_FIELD} />
+          <TextField source={SKUSUBGROUPID_TITLE_FIELD} />
         </ReferenceField>
         <TextField label="Sku Type" source="skuType" />
         <DateField source="updatedAt" label="Updated At" />
