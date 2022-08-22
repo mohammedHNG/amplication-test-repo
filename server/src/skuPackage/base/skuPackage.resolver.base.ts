@@ -100,12 +100,6 @@ export class SkuPackageResolverBase {
       data: {
         ...args.data,
 
-        inclusionSku: args.data.inclusionSku
-          ? {
-              connect: args.data.inclusionSku,
-            }
-          : undefined,
-
         sku: args.data.sku
           ? {
               connect: args.data.sku,
@@ -130,12 +124,6 @@ export class SkuPackageResolverBase {
         ...args,
         data: {
           ...args.data,
-
-          inclusionSku: args.data.inclusionSku
-            ? {
-                connect: args.data.inclusionSku,
-              }
-            : undefined,
 
           sku: args.data.sku
             ? {
@@ -173,24 +161,6 @@ export class SkuPackageResolverBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Sku, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Sku",
-    action: "read",
-    possession: "any",
-  })
-  async inclusionSku(
-    @graphql.Parent() parent: SkuPackage
-  ): Promise<Sku | null> {
-    const result = await this.service.getInclusionSku(parent.id);
-
-    if (!result) {
-      return null;
-    }
-    return result;
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)

@@ -14,9 +14,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import {
   IsDate,
   IsString,
-  ValidateNested,
-  IsOptional,
   IsNumber,
+  IsOptional,
+  ValidateNested,
 } from "class-validator";
 import { Type } from "class-transformer";
 import { Sku } from "../../sku/base/Sku";
@@ -37,15 +37,6 @@ class SkuPackage {
   @IsString()
   @Field(() => String)
   id!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => Sku,
-  })
-  @ValidateNested()
-  @Type(() => Sku)
-  @IsOptional()
-  inclusionSku?: Sku | null;
 
   @ApiProperty({
     required: false,

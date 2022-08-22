@@ -51,12 +51,6 @@ export class SkuPackageControllerBase {
       data: {
         ...data,
 
-        inclusionSku: data.inclusionSku
-          ? {
-              connect: data.inclusionSku,
-            }
-          : undefined,
-
         sku: data.sku
           ? {
               connect: data.sku,
@@ -66,13 +60,6 @@ export class SkuPackageControllerBase {
       select: {
         createdAt: true,
         id: true,
-
-        inclusionSku: {
-          select: {
-            id: true,
-          },
-        },
-
         inclusionSkuPrice: true,
 
         sku: {
@@ -103,13 +90,6 @@ export class SkuPackageControllerBase {
       select: {
         createdAt: true,
         id: true,
-
-        inclusionSku: {
-          select: {
-            id: true,
-          },
-        },
-
         inclusionSkuPrice: true,
 
         sku: {
@@ -141,13 +121,6 @@ export class SkuPackageControllerBase {
       select: {
         createdAt: true,
         id: true,
-
-        inclusionSku: {
-          select: {
-            id: true,
-          },
-        },
-
         inclusionSkuPrice: true,
 
         sku: {
@@ -187,12 +160,6 @@ export class SkuPackageControllerBase {
         data: {
           ...data,
 
-          inclusionSku: data.inclusionSku
-            ? {
-                connect: data.inclusionSku,
-              }
-            : undefined,
-
           sku: data.sku
             ? {
                 connect: data.sku,
@@ -202,13 +169,6 @@ export class SkuPackageControllerBase {
         select: {
           createdAt: true,
           id: true,
-
-          inclusionSku: {
-            select: {
-              id: true,
-            },
-          },
-
           inclusionSkuPrice: true,
 
           sku: {
@@ -248,13 +208,6 @@ export class SkuPackageControllerBase {
         select: {
           createdAt: true,
           id: true,
-
-          inclusionSku: {
-            select: {
-              id: true,
-            },
-          },
-
           inclusionSkuPrice: true,
 
           sku: {

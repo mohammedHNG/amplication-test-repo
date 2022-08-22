@@ -298,116 +298,6 @@ export class SkuControllerBase {
     action: "read",
     possession: "any",
   })
-  @common.Get("/:id/inclusionSku")
-  @ApiNestedQuery(SkuPackageFindManyArgs)
-  async findManyInclusionSku(
-    @common.Req() request: Request,
-    @common.Param() params: SkuWhereUniqueInput
-  ): Promise<SkuPackage[]> {
-    const query = plainToClass(SkuPackageFindManyArgs, request.query);
-    const results = await this.service.findInclusionSku(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-        id: true,
-
-        inclusionSku: {
-          select: {
-            id: true,
-          },
-        },
-
-        inclusionSkuPrice: true,
-
-        sku: {
-          select: {
-            id: true,
-          },
-        },
-
-        updatedAt: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "Sku",
-    action: "update",
-    possession: "any",
-  })
-  @common.Post("/:id/inclusionSku")
-  async connectInclusionSku(
-    @common.Param() params: SkuWhereUniqueInput,
-    @common.Body() body: SkuPackageWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      inclusionSku: {
-        connect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "Sku",
-    action: "update",
-    possession: "any",
-  })
-  @common.Patch("/:id/inclusionSku")
-  async updateInclusionSku(
-    @common.Param() params: SkuWhereUniqueInput,
-    @common.Body() body: SkuPackageWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      inclusionSku: {
-        set: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @nestAccessControl.UseRoles({
-    resource: "Sku",
-    action: "update",
-    possession: "any",
-  })
-  @common.Delete("/:id/inclusionSku")
-  async disconnectInclusionSku(
-    @common.Param() params: SkuWhereUniqueInput,
-    @common.Body() body: SkuPackageWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      inclusionSku: {
-        disconnect: body,
-      },
-    };
-    await this.service.update({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @nestAccessControl.UseRoles({
-    resource: "SkuPackage",
-    action: "read",
-    possession: "any",
-  })
   @common.Get("/:id/skuPackages")
   @ApiNestedQuery(SkuPackageFindManyArgs)
   async findManySkuPackages(
@@ -420,13 +310,6 @@ export class SkuControllerBase {
       select: {
         createdAt: true,
         id: true,
-
-        inclusionSku: {
-          select: {
-            id: true,
-          },
-        },
-
         inclusionSkuPrice: true,
 
         sku: {

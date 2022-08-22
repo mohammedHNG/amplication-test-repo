@@ -14,8 +14,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
 import { FloatNullableFilter } from "../../util/FloatNullableFilter";
+import { SkuWhereUniqueInput } from "../../sku/base/SkuWhereUniqueInput";
 @InputType()
 class SkuPackageWhereInput {
   @ApiProperty({
@@ -28,18 +28,6 @@ class SkuPackageWhereInput {
     nullable: true,
   })
   id?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => SkuWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => SkuWhereUniqueInput)
-  @IsOptional()
-  @Field(() => SkuWhereUniqueInput, {
-    nullable: true,
-  })
-  inclusionSku?: SkuWhereUniqueInput;
 
   @ApiProperty({
     required: false,

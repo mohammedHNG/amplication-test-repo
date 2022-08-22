@@ -175,26 +175,6 @@ export class SkuResolverBase {
     action: "read",
     possession: "any",
   })
-  async inclusionSku(
-    @graphql.Parent() parent: Sku,
-    @graphql.Args() args: SkuPackageFindManyArgs
-  ): Promise<SkuPackage[]> {
-    const results = await this.service.findInclusionSku(parent.id, args);
-
-    if (!results) {
-      return [];
-    }
-
-    return results;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => [SkuPackage])
-  @nestAccessControl.UseRoles({
-    resource: "SkuPackage",
-    action: "read",
-    possession: "any",
-  })
   async skuPackages(
     @graphql.Parent() parent: Sku,
     @graphql.Args() args: SkuPackageFindManyArgs

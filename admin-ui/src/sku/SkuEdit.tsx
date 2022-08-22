@@ -4,15 +4,15 @@ import {
   Edit,
   SimpleForm,
   EditProps,
-  ReferenceArrayInput,
-  SelectArrayInput,
   TextInput,
   ReferenceInput,
   SelectInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from "react-admin";
 
-import { SkuPackageTitle } from "../skuPackage/SkuPackageTitle";
 import { SkuGroupTitle } from "../skuGroup/SkuGroupTitle";
+import { SkuPackageTitle } from "../skuPackage/SkuPackageTitle";
 import { SkuSubGroupTitle } from "../skuSubGroup/SkuSubGroupTitle";
 
 export const SkuEdit = (props: EditProps): React.ReactElement => {
@@ -20,14 +20,6 @@ export const SkuEdit = (props: EditProps): React.ReactElement => {
     <Edit {...props}>
       <SimpleForm>
         <div />
-        <ReferenceArrayInput
-          source="inclusionSku"
-          reference="SkuPackage"
-          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
-          format={(value: any) => value && value.map((v: any) => v.id)}
-        >
-          <SelectArrayInput optionText={SkuPackageTitle} />
-        </ReferenceArrayInput>
         <TextInput label="Sku Description" multiline source="skuDescription" />
         <ReferenceInput
           source="skugroup.id"

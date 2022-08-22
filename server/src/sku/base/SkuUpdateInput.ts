@@ -14,15 +14,15 @@ import { ApiProperty } from "@nestjs/swagger";
 import {
   IsJSON,
   IsOptional,
-  ValidateNested,
   IsString,
+  ValidateNested,
   IsEnum,
 } from "class-validator";
 import { GraphQLJSONObject } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
-import { SkuPackageUpdateManyWithoutSkusInput } from "./SkuPackageUpdateManyWithoutSkusInput";
-import { Type } from "class-transformer";
 import { SkuGroupWhereUniqueInput } from "../../skuGroup/base/SkuGroupWhereUniqueInput";
+import { Type } from "class-transformer";
+import { SkuPackageUpdateManyWithoutSkusInput } from "./SkuPackageUpdateManyWithoutSkusInput";
 import { SkuSubGroupWhereUniqueInput } from "../../skuSubGroup/base/SkuSubGroupWhereUniqueInput";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @InputType()
@@ -36,18 +36,6 @@ class SkuUpdateInput {
     nullable: true,
   })
   fulfillmentInfo?: InputJsonValue;
-
-  @ApiProperty({
-    required: false,
-    type: () => SkuPackageUpdateManyWithoutSkusInput,
-  })
-  @ValidateNested()
-  @Type(() => SkuPackageUpdateManyWithoutSkusInput)
-  @IsOptional()
-  @Field(() => SkuPackageUpdateManyWithoutSkusInput, {
-    nullable: true,
-  })
-  inclusionSku?: SkuPackageUpdateManyWithoutSkusInput;
 
   @ApiProperty({
     required: false,
