@@ -9,7 +9,7 @@ import {
 } from "react-admin";
 import Pagination from "../Components/Pagination";
 import { SKUGROUP_TITLE_FIELD } from "../skuGroup/SkuGroupTitle";
-import { SKUSUBGROUP_TITLE_FIELD } from "../skuSubGroup/SkuSubGroupTitle";
+import { SKUSUBGROUPID_TITLE_FIELD } from "../skuSubGroupId/SkuSubGroupIdTitle";
 
 export const SkuList = (props: ListProps): React.ReactElement => {
   return (
@@ -35,10 +35,10 @@ export const SkuList = (props: ListProps): React.ReactElement => {
         <TextField label="Sku Name" source="skuName" />
         <ReferenceField
           label="Sku Sub Group"
-          source="skusubgroup.id"
-          reference="SkuSubGroup"
+          source="skusubgroupid.id"
+          reference="SkuSubGroupId"
         >
-          <TextField source={SKUSUBGROUP_TITLE_FIELD} />
+          <TextField source={SKUSUBGROUPID_TITLE_FIELD} />
         </ReferenceField>
         <TextField label="Sku Type" source="skuType" />
         <DateField source="updatedAt" label="Updated At" />

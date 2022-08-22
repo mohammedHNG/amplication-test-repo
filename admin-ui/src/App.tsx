@@ -17,10 +17,10 @@ import { SkuGroupList } from "./skuGroup/SkuGroupList";
 import { SkuGroupCreate } from "./skuGroup/SkuGroupCreate";
 import { SkuGroupEdit } from "./skuGroup/SkuGroupEdit";
 import { SkuGroupShow } from "./skuGroup/SkuGroupShow";
-import { SkuSubGroupList } from "./skuSubGroup/SkuSubGroupList";
-import { SkuSubGroupCreate } from "./skuSubGroup/SkuSubGroupCreate";
-import { SkuSubGroupEdit } from "./skuSubGroup/SkuSubGroupEdit";
-import { SkuSubGroupShow } from "./skuSubGroup/SkuSubGroupShow";
+import { SkuSubGroupIdList } from "./skuSubGroupId/SkuSubGroupIdList";
+import { SkuSubGroupIdCreate } from "./skuSubGroupId/SkuSubGroupIdCreate";
+import { SkuSubGroupIdEdit } from "./skuSubGroupId/SkuSubGroupIdEdit";
+import { SkuSubGroupIdShow } from "./skuSubGroupId/SkuSubGroupIdShow";
 import { SkuPackageList } from "./skuPackage/SkuPackageList";
 import { SkuPackageCreate } from "./skuPackage/SkuPackageCreate";
 import { SkuPackageEdit } from "./skuPackage/SkuPackageEdit";
@@ -73,11 +73,11 @@ const App = (): React.ReactElement => {
           show={SkuGroupShow}
         />
         <Resource
-          name="SkuSubGroup"
-          list={SkuSubGroupList}
-          edit={SkuSubGroupEdit}
-          create={SkuSubGroupCreate}
-          show={SkuSubGroupShow}
+          name="SkuSubGroupId"
+          list={SkuSubGroupIdList}
+          edit={SkuSubGroupIdEdit}
+          create={SkuSubGroupIdCreate}
+          show={SkuSubGroupIdShow}
         />
         <Resource
           name="SkuPackage"

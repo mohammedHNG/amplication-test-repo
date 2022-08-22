@@ -24,7 +24,7 @@ import { GraphQLJSONObject } from "graphql-type-json";
 import { JsonValue } from "type-fest";
 import { SkuGroup } from "../../skuGroup/base/SkuGroup";
 import { SkuPackage } from "../../skuPackage/base/SkuPackage";
-import { SkuSubGroup } from "../../skuSubGroup/base/SkuSubGroup";
+import { SkuSubGroupId } from "../../skuSubGroupId/base/SkuSubGroupId";
 import { EnumSkuSkuType } from "./EnumSkuSkuType";
 @ObjectType()
 class Sku {
@@ -96,12 +96,12 @@ class Sku {
 
   @ApiProperty({
     required: false,
-    type: () => SkuSubGroup,
+    type: () => SkuSubGroupId,
   })
   @ValidateNested()
-  @Type(() => SkuSubGroup)
+  @Type(() => SkuSubGroupId)
   @IsOptional()
-  skuSubGroupId?: SkuSubGroup | null;
+  skuSubGroupId?: SkuSubGroupId | null;
 
   @ApiProperty({
     required: false,

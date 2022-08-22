@@ -4,7 +4,7 @@ import { MorganInterceptor, MorganModule } from "nest-morgan";
 import { UserModule } from "./user/user.module";
 import { SkuModule } from "./sku/sku.module";
 import { SkuGroupModule } from "./skuGroup/skuGroup.module";
-import { SkuSubGroupModule } from "./skuSubGroup/skuSubGroup.module";
+import { SkuSubGroupIdModule } from "./skuSubGroupId/skuSubGroupId.module";
 import { SkuPackageModule } from "./skuPackage/skuPackage.module";
 import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
@@ -21,7 +21,7 @@ import { GraphQLModule } from "@nestjs/graphql";
     UserModule,
     SkuModule,
     SkuGroupModule,
-    SkuSubGroupModule,
+    SkuSubGroupIdModule,
     SkuPackageModule,
     ACLModule,
     AuthModule,

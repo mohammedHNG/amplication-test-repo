@@ -1,8 +1,8 @@
 import { SkuCreateNestedManyWithoutSkuGroupsInput } from "./SkuCreateNestedManyWithoutSkuGroupsInput";
-import { SkuSubGroupCreateNestedManyWithoutSkuGroupsInput } from "./SkuSubGroupCreateNestedManyWithoutSkuGroupsInput";
+import { SkuSubGroupIdCreateNestedManyWithoutSkuGroupsInput } from "./SkuSubGroupIdCreateNestedManyWithoutSkuGroupsInput";
 
 export type SkuGroupCreateInput = {
   skuGroupName?: string | null;
   skus?: SkuCreateNestedManyWithoutSkuGroupsInput;
-  skuSubGroups?: SkuSubGroupCreateNestedManyWithoutSkuGroupsInput;
+  skuSubGroups?: SkuSubGroupIdCreateNestedManyWithoutSkuGroupsInput;
 };

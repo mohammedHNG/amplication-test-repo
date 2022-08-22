@@ -10,7 +10,7 @@ import {
 } from "react-admin";
 
 import { SkuTitle } from "../sku/SkuTitle";
-import { SkuSubGroupTitle } from "../skuSubGroup/SkuSubGroupTitle";
+import { SkuSubGroupIdTitle } from "../skuSubGroupId/SkuSubGroupIdTitle";
 
 export const SkuGroupEdit = (props: EditProps): React.ReactElement => {
   return (
@@ -27,11 +27,11 @@ export const SkuGroupEdit = (props: EditProps): React.ReactElement => {
         </ReferenceArrayInput>
         <ReferenceArrayInput
           source="skuSubGroups"
-          reference="SkuSubGroup"
+          reference="SkuSubGroupId"
           parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
           format={(value: any) => value && value.map((v: any) => v.id)}
         >
-          <SelectArrayInput optionText={SkuSubGroupTitle} />
+          <SelectArrayInput optionText={SkuSubGroupIdTitle} />
         </ReferenceArrayInput>
       </SimpleForm>
     </Edit>

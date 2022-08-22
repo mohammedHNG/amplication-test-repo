@@ -3,7 +3,7 @@ import { StringFilter } from "../../util/StringFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { SkuGroupWhereUniqueInput } from "../skuGroup/SkuGroupWhereUniqueInput";
 import { SkuPackageListRelationFilter } from "../skuPackage/SkuPackageListRelationFilter";
-import { SkuSubGroupWhereUniqueInput } from "../skuSubGroup/SkuSubGroupWhereUniqueInput";
+import { SkuSubGroupIdWhereUniqueInput } from "../skuSubGroupId/SkuSubGroupIdWhereUniqueInput";
 
 export type SkuWhereInput = {
   fulfillmentInfo?: JsonFilter;
@@ -12,6 +12,6 @@ export type SkuWhereInput = {
   skuGroupId?: SkuGroupWhereUniqueInput;
   skuName?: StringNullableFilter;
   skuPackages?: SkuPackageListRelationFilter;
-  skuSubGroupId?: SkuSubGroupWhereUniqueInput;
+  skuSubGroupId?: SkuSubGroupIdWhereUniqueInput;
   skuType?: "Item" | "Package";
 };

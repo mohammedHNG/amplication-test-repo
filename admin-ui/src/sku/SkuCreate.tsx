@@ -13,7 +13,7 @@ import {
 
 import { SkuGroupTitle } from "../skuGroup/SkuGroupTitle";
 import { SkuPackageTitle } from "../skuPackage/SkuPackageTitle";
-import { SkuSubGroupTitle } from "../skuSubGroup/SkuSubGroupTitle";
+import { SkuSubGroupIdTitle } from "../skuSubGroupId/SkuSubGroupIdTitle";
 
 export const SkuCreate = (props: CreateProps): React.ReactElement => {
   return (
@@ -38,11 +38,11 @@ export const SkuCreate = (props: CreateProps): React.ReactElement => {
           <SelectArrayInput optionText={SkuPackageTitle} />
         </ReferenceArrayInput>
         <ReferenceInput
-          source="skusubgroup.id"
-          reference="SkuSubGroup"
+          source="skusubgroupid.id"
+          reference="SkuSubGroupId"
           label="Sku Sub Group"
         >
-          <SelectInput optionText={SkuSubGroupTitle} />
+          <SelectInput optionText={SkuSubGroupIdTitle} />
         </ReferenceInput>
         <SelectInput
           source="skuType"

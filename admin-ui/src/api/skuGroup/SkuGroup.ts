@@ -1,11 +1,11 @@
 import { Sku } from "../sku/Sku";
-import { SkuSubGroup } from "../skuSubGroup/SkuSubGroup";
+import { SkuSubGroupId } from "../skuSubGroupId/SkuSubGroupId";
 
 export type SkuGroup = {
   createdAt: Date;
   id: string;
   skuGroupName: string | null;
   skus?: Array<Sku>;
-  skuSubGroups?: Array<SkuSubGroup>;
+  skuSubGroups?: Array<SkuSubGroupId>;
   updatedAt: Date;
 };

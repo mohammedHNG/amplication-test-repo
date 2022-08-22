@@ -1,7 +1,7 @@
 import { InputJsonValue } from "../../types";
 import { SkuGroupWhereUniqueInput } from "../skuGroup/SkuGroupWhereUniqueInput";
 import { SkuPackageUpdateManyWithoutSkusInput } from "./SkuPackageUpdateManyWithoutSkusInput";
-import { SkuSubGroupWhereUniqueInput } from "../skuSubGroup/SkuSubGroupWhereUniqueInput";
+import { SkuSubGroupIdWhereUniqueInput } from "../skuSubGroupId/SkuSubGroupIdWhereUniqueInput";
 
 export type SkuUpdateInput = {
   fulfillmentInfo?: InputJsonValue;
@@ -9,6 +9,6 @@ export type SkuUpdateInput = {
   skuGroupId?: SkuGroupWhereUniqueInput | null;
   skuName?: string | null;
   skuPackages?: SkuPackageUpdateManyWithoutSkusInput;
-  skuSubGroupId?: SkuSubGroupWhereUniqueInput | null;
+  skuSubGroupId?: SkuSubGroupIdWhereUniqueInput | null;
   skuType?: "Item" | "Package" | null;
 };
